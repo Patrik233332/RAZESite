@@ -104,7 +104,7 @@
             box-shadow: 0 0 35px rgba(239, 68, 68, 0.8);
         }
 
-        /* === НАВИГАЦИЯ — ВСЕГДА ПОВЕРХ И НЕ МЕНЯЕТ ЦВЕТ === */
+        /* === НАВИГАЦИЯ — FIXED ПОВЕРХ ВСЕГО === */
         .navbar {
             position: fixed;
             top: 0;
@@ -245,7 +245,6 @@
             padding: 32px 24px 24px;
             width: 320px;
             text-align: center;
-            border: 2px solid #232a36;
             position: relative;
             transition: 0.3s;
             display: flex;
@@ -253,12 +252,23 @@
             overflow: hidden;
         }
 
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: #facc15;
-        }
+        /* Обводка цветом кита + hover эффект */
+        .card-sheriff { border: 2px solid #3b82f6; }
+        .card-sniper-lite { border: 2px solid #10b981; }
+        .card-sniper-pro { border: 2px solid #a855f7; }
+        .card-raid-lite { border: 2px solid #f97316; }
+        .card-raid-pro { border: 2px solid #ef4444; }
+        .card-deadzone { border: 2px solid #eab308; }
 
-        /* Полоска сверху — теперь скруглена как у карточки */
+        /* При наведении рамка становится ярче */
+        .card-sheriff:hover { border-color: #60a5fa; transform: translateY(-10px); }
+        .card-sniper-lite:hover { border-color: #34d399; transform: translateY(-10px); }
+        .card-sniper-pro:hover { border-color: #c084fc; transform: translateY(-10px); }
+        .card-raid-lite:hover { border-color: #fb923c; transform: translateY(-10px); }
+        .card-raid-pro:hover { border-color: #f87171; transform: translateY(-10px); }
+        .card-deadzone:hover { border-color: #fbbf24; transform: translateY(-10px); }
+
+        /* Верхняя цветная полоска */
         .card::before {
             content: '';
             position: absolute;
@@ -350,7 +360,15 @@
             margin-top: auto;
             transition: 0.3s;
         }
-        .pay-btn:hover { opacity: 0.8; }
+
+        .card-sheriff .pay-btn { background: #1e3a8a; }
+        .card-sniper-lite .pay-btn { background: #0e5e42; }
+        .card-sniper-pro .pay-btn { background: #6b21a5; }
+        .card-raid-lite .pay-btn { background: #9a3412; }
+        .card-raid-pro .pay-btn { background: #dc2626; }
+        .card-deadzone .pay-btn { background: #854d0e; }
+
+        .pay-btn:hover { opacity: 0.8; transform: scale(0.98); }
 
         .modal {
             display: none;
@@ -397,7 +415,6 @@
 </head>
 <body>
 
-    <!-- НАВИГАЦИЯ — FIXED ПОВЕРХ ВСЕГО, НЕ МЕНЯЕТ ЦВЕТ -->
     <nav class="navbar">
         <a href="#" class="nav-logo" onclick="showPage('hero-page')">RAZE<span>Servers</span></a>
         <div class="nav-center">
@@ -410,28 +427,21 @@
         <div class="nav-placeholder"></div>
     </nav>
 
-    <!-- ГЛАВНАЯ СТРАНИЦА С ВИДЕО -->
     <div id="hero-page" class="hero">
-        <video autoplay muted loop playsinline class="hero-video" poster="https://cdn.pixabay.com/video/2022/07/01/123456-720p.mp4">
+        <video autoplay muted loop playsinline class="hero-video">
             <source src="https://cdn.pixabay.com/video/2024/03/15/204120-91827364_large.mp4" type="video/mp4">
-            Ваш браузер не поддерживает видео.
         </video>
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <div class="logo">RAZE <span>SERVERS</span></div>
-            <p class="description">
-                💀 Хардкорное выживание на максималках. <br>
-                Уникальная сборка, киты, TPA, Home, рейды и честная PvP атмосфера.
-            </p>
+            <p class="description">💀 Хардкорное выживание на максималках.<br>Уникальная сборка, киты, TPA, Home, рейды и честная PvP атмосфера.</p>
             <button class="play-btn" onclick="showPage('servers-page')">▶ ИГРАТЬ</button>
         </div>
     </div>
 
-    <!-- СТРАНИЦА СЕРВЕРОВ -->
     <div id="servers-page" class="page">
         <div class="container">
             <h2>Наши <span>Сервера</span></h2>
-
             <div class="server-card">
                 <div class="server-info">
                     <h3>RAZE #1 | Дикое выживание [Kits, TPA, Home] RU</h3>
@@ -440,7 +450,6 @@
                 <div class="server-status">🟢 Онлайн: 45 / 60</div>
                 <button class="copy-btn" onclick="copyIP('127.0.0.1:27015')">📋 Копировать IP</button>
             </div>
-
             <div class="server-card">
                 <div class="server-info">
                     <h3>RAZE #2 | Yukon Hardcore</h3>
@@ -452,11 +461,9 @@
         </div>
     </div>
 
-    <!-- СТРАНИЦА ДОНАТА -->
     <div id="donate-page" class="page">
         <div class="container">
             <h2>Магазин <span>Привилегий</span></h2>
-
             <div class="cards-grid">
                 <div class="card card-sheriff">
                     <div class="card-title">SHERIFF</div>
@@ -538,7 +545,6 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО -->
     <div id="donate-modal" class="modal" onclick="closeDonateModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h2>✅ ОПЛАЧЕНО!</h2>
