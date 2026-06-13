@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>RAZE Servers | Unturned</title>
     
-    <!-- FAVICON — красная буква R -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23ef4444'/%3E%3Ctext x='50' y='72' font-size='70' font-family='Arial, sans-serif' font-weight='bold' fill='white' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
     
     <style>
@@ -20,7 +19,6 @@
             overflow-x: hidden;
         }
 
-        /* === ВИДЕО-ФОН === */
         .hero {
             position: relative;
             width: 100%;
@@ -108,7 +106,6 @@
             box-shadow: 0 0 35px rgba(239, 68, 68, 0.8);
         }
 
-        /* === НАВИГАЦИЯ === */
         .navbar {
             position: fixed;
             top: 0;
@@ -166,7 +163,6 @@
             flex-shrink: 0;
         }
 
-        /* === ОСТАЛЬНЫЕ СТРАНИЦЫ === */
         .page {
             display: none;
             background: linear-gradient(135deg, #0b0f1a 0%, #0a0e17 100%);
@@ -443,12 +439,12 @@
             <div class="server-card">
                 <div class="server-info">
                     <h3>RAZE #1 | Дикое выживание [Kits, TPA, Home] RU</h3>
-                    <p>IP: 26.28.229.239:27015 | Карта: <span id="server-map">Escalation</span></p>
+                    <p>IP: 26.28.229.239:27115 | Карта: <span id="server-map">Escalation</span></p>
                 </div>
                 <div class="server-status" id="server-status">
                     🟢 Онлайн: <span id="online-count">Загрузка...</span>
                 </div>
-                <button class="copy-btn" onclick="copyIP('26.28.229.239:27015')">📋 Копировать IP</button>
+                <button class="copy-btn" onclick="copyIP('26.28.229.239:27115')">📋 Копировать IP</button>
             </div>
         </div>
     </div>
@@ -547,11 +543,12 @@
     </div>
 
     <script>
-        // ========== НАСТРОЙКИ (ИЗМЕНИ ПОД СЕБЯ) ==========
-        // ВАЖНО: Замени URL на твой ngrok адрес или на свой публичный IP
-        const PYTHON_API_URL = "http://26.28.229.239:5000";  // Твой Radmin IP
+        // ========== НАСТРОЙКИ ==========
+        // ВНИМАНИЕ: Python API должен быть запущен и доступен
+        // Если используешь ngrok — замени URL на свой ngrok адрес
+        const PYTHON_API_URL = "http://26.28.229.239:5000";  // Твой Radmin IP + порт 5000
         const API_SECRET = "raze2024";
-        // =================================================
+        // =================================
         
         async function fetchServerStatus() {
             const statusSpan = document.getElementById('online-count');
@@ -616,7 +613,6 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             showPage('hero-page');
-            // Проверяем статус каждые 30 секунд, если мы на странице серверов
             setInterval(() => {
                 if (document.getElementById('servers-page').classList.contains('active')) {
                     fetchServerStatus();
