@@ -2,10 +2,9 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unturned | RAZE Servers</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>RAZE Servers | Unturned</title>
     <style>
-        /* --- ОБЩИЕ СТИЛИ --- */
         * {
             margin: 0;
             padding: 0;
@@ -13,108 +12,174 @@
         }
 
         body {
-            background: linear-gradient(135deg, #0b0f1a 0%, #0a0e17 100%);
-            font-family: 'Segoe UI', 'Roboto', sans-serif;
-            color: white;
-            min-height: 100vh;
+            font-family: 'Segoe UI', 'Roboto', 'Poppins', system-ui, sans-serif;
             overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 20px;
+        /* === ВИДЕО-ФОН === */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
         }
 
-        /* --- НАВИГАЦИЯ --- */
-        .navbar {
-            background: rgba(17, 22, 31, 0.9);
-            padding: 15px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
+        .hero-video {
+            position: absolute;
             top: 0;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid #232a36;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        /* Затемнение поверх видео */
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2;
+        }
+
+        /* Контент поверх видео */
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            text-align: center;
+            padding: 0 20px;
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 5rem;
             font-weight: 900;
-            color: white;
-            text-decoration: none;
-            letter-spacing: 1px;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff, #ef4444, #facc15);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 30px rgba(239, 68, 68, 0.3);
         }
 
-        .logo span { color: #ef4444; }
+        .logo span {
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+            color: #ef4444;
+        }
+
+        .description {
+            font-size: 1.2rem;
+            color: #e0e0e0;
+            max-width: 600px;
+            margin-bottom: 40px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            line-height: 1.6;
+        }
+
+        .play-btn {
+            background: linear-gradient(135deg, #ef4444, #b91c1c);
+            border: none;
+            padding: 16px 48px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgba(239, 68, 68, 0.8);
+        }
+
+        /* === НАВИГАЦИЯ (поверх видео, прозрачная) === */
+        .navbar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            color: #ef4444;
+        }
 
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 20px;
+            gap: 30px;
         }
 
-        .nav-links li a {
-            color: #8e9aaf;
+        .nav-links a {
+            color: #e0e0e0;
             text-decoration: none;
-            font-weight: 600;
-            cursor: pointer;
+            font-weight: 500;
             transition: 0.3s;
+            cursor: pointer;
         }
 
-        .nav-links li a:hover, .nav-links li a.active {
+        .nav-links a:hover {
             color: #ef4444;
         }
 
-        /* --- ЛОГИКА ПЕРЕКЛЮЧЕНИЯ СЕКЦИЙ --- */
-        section {
+        /* === ОСТАЛЬНЫЕ СТРАНИЦЫ (Сервера, Донат) — отдельный фон === */
+        .page {
             display: none;
-            animation: fadeIn 0.5s ease;
+            background: linear-gradient(135deg, #0b0f1a 0%, #0a0e17 100%);
+            min-height: 100vh;
+            padding: 100px 20px 60px;
         }
 
-        section.active {
+        .page.active {
             display: block;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .page .container {
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
-        /* --- ГЛАВНАЯ СТРАНИЦА (HOME) --- */
-        .hero {
+        .page h2 {
             text-align: center;
-            padding: 100px 20px;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #fff, #ef4444);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .hero p { color: #8e9aaf; font-size: 1.2rem; margin-bottom: 40px; }
-
-        .btn-main {
-            background: #ef4444;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
             color: white;
-            padding: 15px 40px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: 0.3s;
-            border: none;
-            cursor: pointer;
         }
 
-        .btn-main:hover { background: #cc0000; transform: scale(1.05); }
+        .page h2 span {
+            color: #ef4444;
+        }
 
-        /* --- СТРАНИЦА СЕРВЕРОВ --- */
+        /* Карточки серверов */
         .server-card {
             background: #11161f;
             border: 1px solid #232a36;
@@ -124,11 +189,40 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
-        .server-status { color: #10b981; font-weight: bold; }
+        .server-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            color: white;
+        }
 
-        /* --- СТРАНИЦА ДОНАТА (ОБНОВЛЕННЫЕ СТИЛИ) --- */
+        .server-info p {
+            color: #8e9aaf;
+        }
+
+        .server-status {
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .copy-btn {
+            background: #1e293b;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: #ef4444;
+        }
+
+        /* Донат карточки */
         .cards-grid {
             display: flex;
             flex-wrap: wrap;
@@ -144,11 +238,9 @@
             text-align: center;
             border: 2px solid #232a36;
             position: relative;
-            overflow: hidden;
             transition: 0.3s;
             display: flex;
             flex-direction: column;
-            min-height: 550px;
         }
 
         .card:hover {
@@ -166,21 +258,12 @@
             border-radius: 32px 32px 0 0;
         }
 
-        /* Цвета обводки для каждого кита */
         .card-sheriff::before { background: #3b82f6; }
         .card-sniper-lite::before { background: #10b981; }
         .card-sniper-pro::before { background: #a855f7; }
         .card-raid-lite::before { background: #f97316; }
         .card-raid-pro::before { background: #ef4444; }
         .card-deadzone::before { background: #eab308; }
-
-        /* При наведении рамка становится цветом кита */
-        .card-sheriff:hover { border-color: #3b82f6; }
-        .card-sniper-lite:hover { border-color: #10b981; }
-        .card-sniper-pro:hover { border-color: #a855f7; }
-        .card-raid-lite:hover { border-color: #f97316; }
-        .card-raid-pro:hover { border-color: #ef4444; }
-        .card-deadzone:hover { border-color: #eab308; }
 
         .card-title {
             font-size: 1.8rem;
@@ -200,11 +283,6 @@
             margin: 15px 0;
             color: white;
         }
-        .price span {
-            font-size: 1rem;
-            font-weight: 400;
-            color: #9aa4bf;
-        }
 
         .cooldown {
             background: #0c101c;
@@ -212,9 +290,8 @@
             border-radius: 60px;
             font-size: 0.8rem;
             color: #b9c7e3;
-            margin: 15px 0;
+            margin: 10px 0;
         }
-        .cooldown strong { color: #ffd966; }
 
         .features {
             list-style: none;
@@ -223,7 +300,7 @@
             font-size: 0.9rem;
         }
         .features li {
-            margin: 10px 0;
+            margin: 8px 0;
             color: #ccd6f0;
             display: flex;
             align-items: center;
@@ -244,34 +321,27 @@
         .subkits {
             background: #0f1420;
             border-left: 3px solid #facc15;
-            padding: 10px 12px;
+            padding: 8px 12px;
             border-radius: 18px;
             font-size: 0.75rem;
             color: #b7c3e6;
-            margin: 15px 0 20px;
+            margin: 10px 0 20px;
         }
 
         .pay-btn {
             background: #1e293b;
-            color: white;
-            padding: 14px 20px;
+            padding: 12px;
             border-radius: 50px;
             border: none;
-            cursor: pointer;
+            color: white;
             font-weight: bold;
+            cursor: pointer;
             margin-top: auto;
             transition: 0.3s;
-            width: 100%;
         }
-        .pay-btn:hover { opacity: 0.8; transform: scale(0.98); }
-        .card-sheriff .pay-btn { background: #1e3a8a; }
-        .card-sniper-lite .pay-btn { background: #0e5e42; }
-        .card-sniper-pro .pay-btn { background: #6b21a5; }
-        .card-raid-lite .pay-btn { background: #9a3412; }
-        .card-raid-pro .pay-btn { background: #dc2626; }
-        .card-deadzone .pay-btn { background: #854d0e; }
+        .pay-btn:hover { opacity: 0.8; }
 
-        /* МОДАЛКА */
+        /* Модалка */
         .modal {
             display: none;
             position: fixed;
@@ -279,8 +349,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 2000;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
             justify-content: center;
             align-items: center;
         }
@@ -294,199 +364,214 @@
             width: 90%;
         }
         .modal-content h2 { color: #facc15; margin-bottom: 20px; }
-        .modal-content p { color: #b7c3e6; margin: 20px 0; }
+        .modal-content p { color: #b7c3e6; margin: 15px 0; }
         .close-modal {
             background: #facc15;
             color: #0a0e17;
             border: none;
-            padding: 12px 24px;
+            padding: 10px 24px;
             border-radius: 40px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 15px;
         }
     </style>
 </head>
 <body>
 
-    <!-- НАВИГАЦИЯ -->
+    <!-- НАВИГАЦИЯ (поверх видео) -->
     <nav class="navbar">
-        <a href="#" class="logo" onclick="showSection('home')">UNTURNED | <span>RAZE</span></a>
+        <a href="#" class="nav-logo" onclick="showPage('hero-page')">RAZE<span>Servers</span></a>
         <ul class="nav-links">
-            <li><a id="link-home" onclick="showSection('home')" class="active">Главная</a></li>
-            <li><a id="link-servers" onclick="showSection('servers')">Сервера</a></li>
-            <li><a id="link-donate" onclick="showSection('donate')">Донат</a></li>
+            <li><a onclick="showPage('hero-page')">Главная</a></li>
+            <li><a onclick="showPage('servers-page')">Сервера</a></li>
+            <li><a onclick="showPage('donate-page')">Донат</a></li>
         </ul>
     </nav>
 
-    <div class="container">
-        
-        <!-- СЕКЦИЯ: ГЛАВНАЯ -->
-        <section id="home" class="active">
-            <div class="hero">
-                <h1>RAZE <span style="color: #ef4444;">SERVERS</span></h1>
-                <p>Погрузись в атмосферу хардкорного выживания в Unturned.<br>Уникальные сборки, честная администрация и стабильный онлайн.</p>
-                <button class="btn-main" onclick="showSection('servers')">Начать игру</button>
-            </div>
-        </section>
-
-        <!-- СЕКЦИЯ: СЕРВЕРА -->
-        <section id="servers">
-            <h2 style="text-align: center; margin-bottom: 40px; font-size: 2.5rem;">Наши <span style="color:#ef4444">Сервера</span></h2>
-            
-            <div class="server-card">
-                <div>
-                    <h3>RAZE #1 | Washington PvP</h3>
-                    <p style="color: #8e9aaf;">IP: 127.0.0.1:27015</p>
-                </div>
-                <div class="server-status">Онлайн: 45 / 60</div>
-                <button class="pay-btn" style="padding: 10px 20px; width: auto;" onclick="copyIP('127.0.0.1:27015')">Копировать IP</button>
-            </div>
-
-            <div class="server-card">
-                <div>
-                    <h3>RAZE #2 | Yukon Survival</h3>
-                    <p style="color: #8e9aaf;">IP: 127.0.0.1:27016</p>
-                </div>
-                <div class="server-status">Онлайн: 12 / 48</div>
-                <button class="pay-btn" style="padding: 10px 20px; width: auto;" onclick="copyIP('127.0.0.1:27016')">Копировать IP</button>
-            </div>
-        </section>
-
-        <!-- СЕКЦИЯ: ДОНАТ (ВСЕ 6 КИТОВ, ПО ВОЗРАСТАНИЮ ЦЕНЫ) -->
-        <section id="donate">
-            <h2 style="text-align: center; margin-bottom: 40px; font-size: 2.5rem;">Магазин <span style="color:#ef4444">Привилегий</span></h2>
-            
-            <div class="cards-grid">
-                <!-- 1. SHERIFF — 79 ₽ (СИНИЙ) -->
-                <div class="card card-sheriff">
-                    <div class="card-title">SHERIFF</div>
-                    <div class="price">79 <span>₽</span></div>
-                    <div class="cooldown">⏱️ КД: <strong>3 часа</strong></div>
-                    <ul class="features">
-                        <li>🎁 Команда <strong>/kit sheriff</strong></li>
-                        <li>🏷️ Префикс <strong>[Sheriff]</strong></li>
-                        <li>🔫 Точный револьвер</li>
-                    </ul>
-                    <button class="pay-btn" onclick="openModal('Sheriff', '/kit sheriff')">⭐ Купить SHERIFF</button>
-                </div>
-
-                <!-- 2. SNIPER LITE — 149 ₽ (ЗЕЛЁНЫЙ) -->
-                <div class="card card-sniper-lite">
-                    <div class="card-title">SNIPER LITE</div>
-                    <div class="price">149 <span>₽</span></div>
-                    <div class="cooldown">⏱️ КД: <strong>4 часа</strong></div>
-                    <ul class="features">
-                        <li>🎁 Команда <strong>/kit sniperlite</strong></li>
-                        <li>🏷️ Префикс <strong>[Stalker]</strong></li>
-                        <li>🔭 Private + Легкая броня</li>
-                        <li>🌿 Тактический разведчик</li>
-                    </ul>
-                    <div class="subkits">❌ Не включает старшие наборы</div>
-                    <button class="pay-btn" onclick="openModal('Sniper Lite', '/kit sniperlite')">🌿 Купить SNIPER LITE</button>
-                </div>
-
-                <!-- 3. RAID LITE — 199 ₽ (ОРАНЖЕВЫЙ) -->
-                <div class="card card-raid-lite">
-                    <div class="card-title">RAID LITE</div>
-                    <div class="price">199 <span>₽</span></div>
-                    <div class="cooldown">⏱️ КД: <strong>8 часов</strong></div>
-                    <ul class="features">
-                        <li>🎁 Команда <strong>/kit raidlite</strong></li>
-                        <li>🏷️ Префикс <strong>[Raider]</strong></li>
-                        <li>🧨 Asset + Bisey + Double Grenade</li>
-                        <li>🔨 Лёгкий штурм</li>
-                    </ul>
-                    <div class="subkits">❌ Не включает старшие наборы</div>
-                    <button class="pay-btn" onclick="openModal('RAID Lite', '/kit raidlite')">🧨 Купить RAID LITE</button>
-                </div>
-
-                <!-- 4. SNIPER PRO — 249 ₽ (ФИОЛЕТОВЫЙ) -->
-                <div class="card card-sniper-pro">
-                    <div class="card-title">SNIPER PRO</div>
-                    <div class="price">249 <span>₽</span></div>
-                    <div class="cooldown">⏱️ КД: <strong>4 часа</strong></div>
-                    <ul class="features">
-                        <li>🎁 Команда <strong>/kit sniperpro</strong></li>
-                        <li>🏷️ Префикс <strong>[Reaper]</strong></li>
-                        <li>💀 CSO-85 + RIOT броня</li>
-                        <li>🏆 Тяжелая артиллерия</li>
-                    </ul>
-                    <div class="subkits">🔓 Включает <strong>Sniper Lite</strong></div>
-                    <button class="pay-btn" onclick="openModal('Sniper Pro', '/kit sniperpro + /kit sniperlite')">🔥 Купить SNIPER PRO</button>
-                </div>
-
-                <!-- 5. RAID PRO — 349 ₽ (КРАСНЫЙ) -->
-                <div class="card card-raid-pro">
-                    <div class="card-title">RAID PRO</div>
-                    <div class="price">349 <span>₽</span></div>
-                    <div class="cooldown">⏱️ КД: <strong>24 часа</strong></div>
-                    <ul class="features">
-                        <li>🎁 Команда <strong>/kit raidpro</strong></li>
-                        <li>🏷️ Префикс <strong>[Destroyer]</strong></li>
-                        <li>💣 <strong>Hermes + 3 HE патрона</strong></li>
-                        <li>🎯 Тяжелая артиллерия</li>
-                    </ul>
-                    <div class="subkits">🔓 Включает <strong>RAID LITE</strong></div>
-                    <button class="pay-btn" onclick="openModal('RAID Pro', '/kit raidpro + /kit raidlite')">💀 Купить RAID PRO</button>
-                </div>
-
-                <!-- 6. DEADZONE — 549 ₽ (ЗОЛОТОЙ, САМЫЙ ДОРОГОЙ) -->
-                <div class="card card-deadzone">
-                    <div class="card-title">DEADZONE</div>
-                    <div class="price">549 <span>₽</span></div>
-                    <div class="cooldown">⏱️ КД: <strong>12 часов</strong></div>
-                    <ul class="features">
-                        <li>🎁 Команда <strong>/kit deadzone</strong></li>
-                        <li>🏷️ Префикс <strong>[DeadZone]</strong></li>
-                        <li>💀 Легендарный набор</li>
-                    </ul>
-                    <div class="subkits">🔓 Включает <strong>Sniper Lite + RAID Lite</strong></div>
-                    <button class="pay-btn" onclick="openModal('DeadZone', '/kit deadzone + /kit sniperlite + /kit raidlite')">👑 Купить DEADZONE</button>
-                </div>
-            </div>
-        </section>
-
+    <!-- ГЛАВНАЯ СТРАНИЦА С ВИДЕО -->
+    <div id="hero-page" class="hero">
+        <video autoplay muted loop playsinline class="hero-video" poster="https://cdn.pixabay.com/video/2022/07/01/123456-720p.mp4">
+            <!-- ВСТАВЬ СВОЁ ВИДЕО ВМЕСТО ЭТОЙ ССЫЛКИ -->
+            <source src="https://cdn.pixabay.com/video/2024/03/15/204120-91827364_large.mp4" type="video/mp4">
+            Ваш браузер не поддерживает видео.
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="logo">RAZE <span>SERVERS</span></div>
+            <p class="description">
+                💀 Хардкорное выживание на максималках. <br>
+                Уникальная сборка, киты, TPA, Home, рейды и честная PvP атмосфера.
+            </p>
+            <button class="play-btn" onclick="showPage('servers-page')">▶ ИГРАТЬ</button>
+        </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО -->
-    <div id="modal" class="modal" onclick="closeModal()">
+    <!-- СТРАНИЦА СЕРВЕРОВ -->
+    <div id="servers-page" class="page">
+        <div class="container">
+            <h2>Наши <span>Сервера</span></h2>
+
+            <div class="server-card">
+                <div class="server-info">
+                    <h3>RAZE #1 | Washington PvP | Escalation</h3>
+                    <p>IP: 127.0.0.1:27015</p>
+                </div>
+                <div class="server-status">🟢 Онлайн: 45 / 60</div>
+                <button class="copy-btn" onclick="copyIP('127.0.0.1:27015')">📋 Копировать IP</button>
+            </div>
+
+            <div class="server-card">
+                <div class="server-info">
+                    <h3>RAZE #2 | Yukon Hardcore</h3>
+                    <p>IP: 127.0.0.1:27016</p>
+                </div>
+                <div class="server-status">🟢 Онлайн: 12 / 48</div>
+                <button class="copy-btn" onclick="copyIP('127.0.0.1:27016')">📋 Копировать IP</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- СТРАНИЦА ДОНАТА -->
+    <div id="donate-page" class="page">
+        <div class="container">
+            <h2>Магазин <span>Привилегий</span></h2>
+
+            <div class="cards-grid">
+                <!-- SHERIFF 79₽ -->
+                <div class="card card-sheriff">
+                    <div class="card-title">SHERIFF</div>
+                    <div class="price">79 ₽</div>
+                    <div class="cooldown">⏱️ КД: 3 часа</div>
+                    <ul class="features">
+                        <li>/kit sheriff</li>
+                        <li>Префикс [Sheriff]</li>
+                        <li>Точный револьвер</li>
+                    </ul>
+                    <button class="pay-btn" onclick="openDonateModal('Sheriff', '/kit sheriff')">Купить</button>
+                </div>
+
+                <!-- SNIPER LITE 149₽ -->
+                <div class="card card-sniper-lite">
+                    <div class="card-title">SNIPER LITE</div>
+                    <div class="price">149 ₽</div>
+                    <div class="cooldown">⏱️ КД: 4 часа</div>
+                    <ul class="features">
+                        <li>/kit sniperlite</li>
+                        <li>Префикс [Stalker]</li>
+                        <li>Private + легкая броня</li>
+                    </ul>
+                    <div class="subkits">❌ Не включает старшие</div>
+                    <button class="pay-btn" onclick="openDonateModal('Sniper Lite', '/kit sniperlite')">Купить</button>
+                </div>
+
+                <!-- RAID LITE 199₽ -->
+                <div class="card card-raid-lite">
+                    <div class="card-title">RAID LITE</div>
+                    <div class="price">199 ₽</div>
+                    <div class="cooldown">⏱️ КД: 8 часов</div>
+                    <ul class="features">
+                        <li>/kit raidlite</li>
+                        <li>Префикс [Raider]</li>
+                        <li>Asset + Bisey + гранаты</li>
+                    </ul>
+                    <div class="subkits">❌ Не включает старшие</div>
+                    <button class="pay-btn" onclick="openDonateModal('RAID Lite', '/kit raidlite')">Купить</button>
+                </div>
+
+                <!-- SNIPER PRO 249₽ -->
+                <div class="card card-sniper-pro">
+                    <div class="card-title">SNIPER PRO</div>
+                    <div class="price">249 ₽</div>
+                    <div class="cooldown">⏱️ КД: 4 часа</div>
+                    <ul class="features">
+                        <li>/kit sniperpro</li>
+                        <li>Префикс [Reaper]</li>
+                        <li>CSO-85 + RIOT броня</li>
+                    </ul>
+                    <div class="subkits">🔓 Включает Sniper Lite</div>
+                    <button class="pay-btn" onclick="openDonateModal('Sniper Pro', '/kit sniperpro + /kit sniperlite')">Купить</button>
+                </div>
+
+                <!-- RAID PRO 349₽ -->
+                <div class="card card-raid-pro">
+                    <div class="card-title">RAID PRO</div>
+                    <div class="price">349 ₽</div>
+                    <div class="cooldown">⏱️ КД: 24 часа</div>
+                    <ul class="features">
+                        <li>/kit raidpro</li>
+                        <li>Префикс [Destroyer]</li>
+                        <li>Hermes + HE патроны</li>
+                    </ul>
+                    <div class="subkits">🔓 Включает RAID LITE</div>
+                    <button class="pay-btn" onclick="openDonateModal('RAID Pro', '/kit raidpro + /kit raidlite')">Купить</button>
+                </div>
+
+                <!-- DEADZONE 549₽ -->
+                <div class="card card-deadzone">
+                    <div class="card-title">DEADZONE</div>
+                    <div class="price">549 ₽</div>
+                    <div class="cooldown">⏱️ КД: 12 часов</div>
+                    <ul class="features">
+                        <li>/kit deadzone</li>
+                        <li>Префикс [DeadZone]</li>
+                        <li>Легендарный набор</li>
+                    </ul>
+                    <div class="subkits">🔓 Включает Sniper Lite + RAID Lite</div>
+                    <button class="pay-btn" onclick="openDonateModal('DeadZone', '/kit deadzone + /kit sniperlite + /kit raidlite')">Купить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО ДОНАТА -->
+    <div id="donate-modal" class="modal" onclick="closeDonateModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h2>✅ ОПЛАЧЕНО!</h2>
-            <p>Привилегия <strong id="modalKitName"></strong> активирована!</p>
-            <p>Steam ID добавлен в группу.</p>
-            <p>🎁 Доступные киты: <span id="modalKitsList"></span></p>
-            <button class="close-modal" onclick="closeModal()">Закрыть</button>
+            <p>Привилегия <strong id="modal-kit-name"></strong> активирована!</p>
+            <p>🎁 Доступные киты: <span id="modal-kits-list"></span></p>
+            <button class="close-modal" onclick="closeDonateModal()">Закрыть</button>
         </div>
     </div>
 
     <script>
-        // Функция переключения страниц
-        function showSection(sectionId) {
-            document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
-            document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
-            document.getElementById('link-' + sectionId).classList.add('active');
+        // Переключение страниц
+        function showPage(pageId) {
+            // Скрываем все страницы
+            document.getElementById('hero-page').style.display = 'none';
+            document.getElementById('servers-page').classList.remove('active');
+            document.getElementById('donate-page').classList.remove('active');
+            
+            if (pageId === 'hero-page') {
+                document.getElementById('hero-page').style.display = 'block';
+            } else if (pageId === 'servers-page') {
+                document.getElementById('servers-page').classList.add('active');
+            } else if (pageId === 'donate-page') {
+                document.getElementById('donate-page').classList.add('active');
+            }
             window.scrollTo(0, 0);
         }
 
         // Копирование IP
         function copyIP(ip) {
             navigator.clipboard.writeText(ip);
-            alert("IP адрес " + ip + " скопирован!");
+            alert('IP адрес ' + ip + ' скопирован!');
         }
 
-        // Модалка для доната
-        function openModal(kitName, kitsList) {
-            document.getElementById('modalKitName').textContent = kitName;
-            document.getElementById('modalKitsList').textContent = kitsList;
-            document.getElementById('modal').style.display = 'flex';
+        // Модалка доната
+        function openDonateModal(kitName, kitsList) {
+            document.getElementById('modal-kit-name').innerText = kitName;
+            document.getElementById('modal-kits-list').innerText = kitsList;
+            document.getElementById('donate-modal').style.display = 'flex';
         }
 
-        function closeModal() {
-            document.getElementById('modal').style.display = 'none';
+        function closeDonateModal() {
+            document.getElementById('donate-modal').style.display = 'none';
         }
+
+        // Убедимся, что главная страница с видео отображается по умолчанию
+        document.addEventListener('DOMContentLoaded', () => {
+            showPage('hero-page');
+        });
     </script>
-
 </body>
 </html>
