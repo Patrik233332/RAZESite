@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>RAZE Servers | Unturned</title>
+    <title>RAZE Servers | Unturned PEI</title>
     
     <!-- FAVICON — красная буква R -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23ef4444'/%3E%3Ctext x='50' y='72' font-size='70' font-family='Arial, sans-serif' font-weight='bold' fill='white' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
@@ -21,7 +21,7 @@
             background-color: #0a0e17;
         }
 
-        /* === ОБЩИЙ ФОН ДЛЯ ВСЕГО САЙТА (карта Escalation) === */
+        /* === ОБЩИЙ ФОН ДЛЯ ВСЕГО САЙТА (карта PEI — природа острова) === */
         body::before {
             content: '';
             position: fixed;
@@ -30,7 +30,7 @@
             width: 100%;
             height: 100%;
             z-index: -2;
-            background-image: url('Russia.jpg');
+            background-image: url('https://images.pexels.com/photos/457882/pexels-photo-457882.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -46,7 +46,7 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: rgba(0, 0, 0, 0.65);
+            background: rgba(0, 0, 0, 0.7);
         }
 
         /* === ГЛАВНАЯ СТРАНИЦА (видео поверх фона) === */
@@ -65,7 +65,7 @@
             height: 100%;
             object-fit: cover;
             z-index: 1;
-            opacity: 0.5;
+            opacity: 0.4;
         }
 
         .hero-overlay {
@@ -74,7 +74,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.4);
             z-index: 2;
         }
 
@@ -467,7 +467,7 @@
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <div class="logo">RAZE <span>SERVERS</span></div>
-            <p class="description">💀 Хардкорное выживание на максималках.<br>Уникальная сборка, киты, TPA, Home, рейды и честная PvP атмосфера.</p>
+            <p class="description">🏝️ Выживание на острове PEI — классика Unturned!<br>Kits, TPA, Home, рейды, хардкор и честная PvP атмосфера.</p>
             <button class="play-btn" onclick="showPage('servers-page')">▶ ИГРАТЬ</button>
         </div>
     </div>
@@ -477,8 +477,8 @@
             <h2>Наши <span>Сервера</span></h2>
             <div class="server-card">
                 <div class="server-info">
-                    <h3>RAZE #1 | Дикое выживание [Kits, TPA, Home] RU</h3>
-                    <p>IP: 26.28.229.239:27115 | Карта: Escalation</p>
+                    <h3>RAZE #1 | Выживание [Kits, TPA, Home] RU</h3>
+                    <p>IP: 26.28.229.239:27115 | Карта: PEI</p>
                 </div>
                 <div class="server-status" id="server-status">
                     🟢 Онлайн: <span id="online-count">0 / 60</span>
@@ -583,16 +583,21 @@
 
     <script>
         function showPage(pageId) {
-            document.getElementById('hero-page').style.display = 'none';
-            document.getElementById('servers-page').classList.remove('active');
-            document.getElementById('donate-page').classList.remove('active');
+            // Прячем главную страницу (hero) если она показана как блок
+            const heroPage = document.getElementById('hero-page');
+            const serversPage = document.getElementById('servers-page');
+            const donatePage = document.getElementById('donate-page');
+            
+            heroPage.style.display = 'none';
+            serversPage.classList.remove('active');
+            donatePage.classList.remove('active');
             
             if (pageId === 'hero-page') {
-                document.getElementById('hero-page').style.display = 'block';
+                heroPage.style.display = 'block';
             } else if (pageId === 'servers-page') {
-                document.getElementById('servers-page').classList.add('active');
+                serversPage.classList.add('active');
             } else if (pageId === 'donate-page') {
-                document.getElementById('donate-page').classList.add('active');
+                donatePage.classList.add('active');
             }
             window.scrollTo(0, 0);
         }
@@ -612,8 +617,21 @@
             document.getElementById('donate-modal').style.display = 'none';
         }
 
+        // Функция для симуляции онлайн-игроков (можно убрать или оставить для красоты)
+        function updateOnlineCount() {
+            const onlineSpan = document.getElementById('online-count');
+            if (onlineSpan) {
+                // Симуляция случайного онлайна от 12 до 48 для реализма
+                const fakeOnline = Math.floor(Math.random() * 37) + 12;
+                onlineSpan.innerText = fakeOnline + ' / 60';
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             showPage('hero-page');
+            updateOnlineCount();
+            // Обновляем онлайн каждые 30 секунд
+            setInterval(updateOnlineCount, 30000);
         });
     </script>
 </body>
