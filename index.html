@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>RAZE Servers | Unturned PEI</title>
+    <title>RAZE Servers | Unturned Russia</title>
     
     <!-- FAVICON — красная буква R -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23ef4444'/%3E%3Ctext x='50' y='72' font-size='70' font-family='Arial, sans-serif' font-weight='bold' fill='white' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
@@ -21,7 +21,7 @@
             background-color: #0a0e17;
         }
 
-        /* === ОБЩИЙ ФОН ДЛЯ ВСЕГО САЙТА (карта PEI — природа острова) === */
+        /* === ОБЩИЙ ФОН ДЛЯ ВСЕГО САЙТА (карта Russia — зимний лес) === */
         body::before {
             content: '';
             position: fixed;
@@ -30,7 +30,7 @@
             width: 100%;
             height: 100%;
             z-index: -2;
-            background-image: url('https://images.pexels.com/photos/457882/pexels-photo-457882.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+            background-image: url('https://images.pexels.com/photos/773116/pexels-photo-773116.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -467,7 +467,7 @@
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <div class="logo">RAZE <span>SERVERS</span></div>
-            <p class="description">🏝️ Выживание на острове PEI — классика Unturned!<br>Kits, TPA, Home, рейды, хардкор и честная PvP атмосфера.</p>
+            <p class="description">❄️ Выживание в заснеженной России!<br>Kits, TPA, Home, рейды, хардкор и честная PvP атмосфера на карте Russia.</p>
             <button class="play-btn" onclick="showPage('servers-page')">▶ ИГРАТЬ</button>
         </div>
     </div>
@@ -478,7 +478,7 @@
             <div class="server-card">
                 <div class="server-info">
                     <h3>RAZE #1 | Выживание [Kits, TPA, Home] RU</h3>
-                    <p>IP: 26.28.229.239:27115 | Карта: PEI</p>
+                    <p>IP: 26.28.229.239:27115 | Карта: Russia</p>
                 </div>
                 <div class="server-status" id="server-status">
                     🟢 Онлайн: <span id="online-count">0 / 60</span>
@@ -583,7 +583,6 @@
 
     <script>
         function showPage(pageId) {
-            // Прячем главную страницу (hero) если она показана как блок
             const heroPage = document.getElementById('hero-page');
             const serversPage = document.getElementById('servers-page');
             const donatePage = document.getElementById('donate-page');
@@ -617,11 +616,10 @@
             document.getElementById('donate-modal').style.display = 'none';
         }
 
-        // Функция для симуляции онлайн-игроков (можно убрать или оставить для красоты)
+        // Симуляция онлайн-игроков
         function updateOnlineCount() {
             const onlineSpan = document.getElementById('online-count');
             if (onlineSpan) {
-                // Симуляция случайного онлайна от 12 до 48 для реализма
                 const fakeOnline = Math.floor(Math.random() * 37) + 12;
                 onlineSpan.innerText = fakeOnline + ' / 60';
             }
@@ -630,7 +628,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             showPage('hero-page');
             updateOnlineCount();
-            // Обновляем онлайн каждые 30 секунд
             setInterval(updateOnlineCount, 30000);
         });
     </script>
