@@ -254,11 +254,9 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            /* Без обводки по умолчанию */
             border: 2px solid transparent;
         }
 
-        /* При наведении — обводка цветом кита */
         .card-sheriff:hover { border-color: #3b82f6; transform: translateY(-10px); }
         .card-sniper-lite:hover { border-color: #10b981; transform: translateY(-10px); }
         .card-sniper-pro:hover { border-color: #a855f7; transform: translateY(-10px); }
@@ -266,7 +264,6 @@
         .card-raid-pro:hover { border-color: #ef4444; transform: translateY(-10px); }
         .card-deadzone:hover { border-color: #eab308; transform: translateY(-10px); }
 
-        /* Верхняя цветная полоска — всегда видна */
         .card::before {
             content: '';
             position: absolute;
@@ -444,16 +441,10 @@
                     <h3>RAZE #1 | Дикое выживание [Kits, TPA, Home] RU</h3>
                     <p>IP: 127.0.0.1:27015 | Карта: Escalation</p>
                 </div>
-                <div class="server-status">🟢 Онлайн: 45 / 60</div>
-                <button class="copy-btn" onclick="copyIP('127.0.0.1:27015')">📋 Копировать IP</button>
-            </div>
-            <div class="server-card">
-                <div class="server-info">
-                    <h3>RAZE #2 | Yukon Hardcore</h3>
-                    <p>IP: 127.0.0.1:27016</p>
+                <div class="server-status">
+                    🟢 Онлайн: <span id="online-count">Загрузка...</span>
                 </div>
-                <div class="server-status">🟢 Онлайн: 12 / 48</div>
-                <button class="copy-btn" onclick="copyIP('127.0.0.1:27016')">📋 Копировать IP</button>
+                <button class="copy-btn" onclick="copyIP('127.0.0.1:27015')">📋 Копировать IP</button>
             </div>
         </div>
     </div>
@@ -552,6 +543,43 @@
     </div>
 
     <script>
+        // ========== НАСТРОЙКИ ДЛЯ ПОДКЛЮЧЕНИЯ К PYTHON API ==========
+        // !!! ЗАМЕНИ ЭТИ ДАННЫЕ НА СВОИ !!!
+        const PYTHON_API_URL = "http://ТВОЙ_IP_ИЛИ_ДОМЕН:5000";  // Адрес где запущен Python скрипт
+        const API_SECRET = "ТВОЙ_СЕКРЕТНЫЙ_КЛЮЧ";               // Тот же ключ что и в Python скрипте
+        // ===========================================================
+        
+        // Функция получения статуса сервера через Python API
+        async function fetchServerStatus() {
+            const statusElement = document.getElementById('online-count');
+            if (!statusElement) return;
+            
+            statusElement.textContent = "⏳ Проверка...";
+            
+            try {
+                // Отправляем запрос к Python API
+                const response = await fetch(`${PYTHON_API_URL}/status?secret=${API_SECRET}`);
+                const data = await response.json();
+                
+                if (data.status === "online") {
+                    statusElement.textContent = `${data.online} / ${data.max_players}`;
+                } else {
+                    statusElement.textContent = "❌ Сервер оффлайн";
+                }
+            } catch (error) {
+                console.error("Ошибка получения статуса:", error);
+                statusElement.textContent = "⚠️ Ошибка подключения";
+            }
+        }
+        
+        // Обновляем статус при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchServerStatus();
+            // Обновляем каждые 30 секунд
+            setInterval(fetchServerStatus, 30000);
+        });
+        
+        // Навигация по страницам
         function showPage(pageId) {
             document.getElementById('hero-page').style.display = 'none';
             document.getElementById('servers-page').classList.remove('active');
@@ -561,6 +589,8 @@
                 document.getElementById('hero-page').style.display = 'block';
             } else if (pageId === 'servers-page') {
                 document.getElementById('servers-page').classList.add('active');
+                // При переходе на страницу серверов обновляем статус
+                fetchServerStatus();
             } else if (pageId === 'donate-page') {
                 document.getElementById('donate-page').classList.add('active');
             }
@@ -581,10 +611,6 @@
         function closeDonateModal() {
             document.getElementById('donate-modal').style.display = 'none';
         }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            showPage('hero-page');
-        });
     </script>
 </body>
 </html>
