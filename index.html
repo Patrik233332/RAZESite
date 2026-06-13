@@ -222,6 +222,10 @@
             font-weight: bold;
         }
 
+        .server-status.offline {
+            color: #ef4444;
+        }
+
         .copy-btn {
             background: #1e293b;
             color: white;
@@ -439,12 +443,12 @@
             <div class="server-card">
                 <div class="server-info">
                     <h3>RAZE #1 | Дикое выживание [Kits, TPA, Home] RU</h3>
-                    <p>IP: 127.0.0.1:27015 | Карта: Escalation</p>
+                    <p>IP: 26.28.229.239:27015 | Карта: <span id="server-map">Escalation</span></p>
                 </div>
-                <div class="server-status">
+                <div class="server-status" id="server-status">
                     🟢 Онлайн: <span id="online-count">Загрузка...</span>
                 </div>
-                <button class="copy-btn" onclick="copyIP('127.0.0.1:27015')">📋 Копировать IP</button>
+                <button class="copy-btn" onclick="copyIP('26.28.229.239:27015')">📋 Копировать IP</button>
             </div>
         </div>
     </div>
@@ -543,43 +547,42 @@
     </div>
 
     <script>
-        // ========== НАСТРОЙКИ ДЛЯ ПОДКЛЮЧЕНИЯ К PYTHON API ==========
-        // !!! ЗАМЕНИ ЭТИ ДАННЫЕ НА СВОИ !!!
-        const PYTHON_API_URL = "http://ТВОЙ_IP_ИЛИ_ДОМЕН:5000";  // Адрес где запущен Python скрипт
-        const API_SECRET = "ТВОЙ_СЕКРЕТНЫЙ_КЛЮЧ";               // Тот же ключ что и в Python скрипте
-        // ===========================================================
+        // ========== НАСТРОЙКИ (ИЗМЕНИ ПОД СЕБЯ) ==========
+        // ВАЖНО: Замени URL на твой ngrok адрес или на свой публичный IP
+        const PYTHON_API_URL = "http://26.28.229.239:5000";  // Твой Radmin IP
+        const API_SECRET = "raze2024";
+        // =================================================
         
-        // Функция получения статуса сервера через Python API
         async function fetchServerStatus() {
-            const statusElement = document.getElementById('online-count');
-            if (!statusElement) return;
+            const statusSpan = document.getElementById('online-count');
+            const statusDiv = document.getElementById('server-status');
+            const mapSpan = document.getElementById('server-map');
             
-            statusElement.textContent = "⏳ Проверка...";
+            if (!statusSpan) return;
+            
+            statusSpan.textContent = "⏳...";
             
             try {
-                // Отправляем запрос к Python API
                 const response = await fetch(`${PYTHON_API_URL}/status?secret=${API_SECRET}`);
                 const data = await response.json();
                 
                 if (data.status === "online") {
-                    statusElement.textContent = `${data.online} / ${data.max_players}`;
+                    statusSpan.textContent = `${data.online} / ${data.max_players}`;
+                    statusDiv.classList.remove('offline');
+                    if (data.map && mapSpan) {
+                        mapSpan.textContent = data.map;
+                    }
                 } else {
-                    statusElement.textContent = "❌ Сервер оффлайн";
+                    statusSpan.textContent = "❌ Оффлайн";
+                    statusDiv.classList.add('offline');
                 }
             } catch (error) {
                 console.error("Ошибка получения статуса:", error);
-                statusElement.textContent = "⚠️ Ошибка подключения";
+                statusSpan.textContent = "⚠️ Ошибка";
+                statusDiv.classList.add('offline');
             }
         }
         
-        // Обновляем статус при загрузке страницы
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchServerStatus();
-            // Обновляем каждые 30 секунд
-            setInterval(fetchServerStatus, 30000);
-        });
-        
-        // Навигация по страницам
         function showPage(pageId) {
             document.getElementById('hero-page').style.display = 'none';
             document.getElementById('servers-page').classList.remove('active');
@@ -589,7 +592,6 @@
                 document.getElementById('hero-page').style.display = 'block';
             } else if (pageId === 'servers-page') {
                 document.getElementById('servers-page').classList.add('active');
-                // При переходе на страницу серверов обновляем статус
                 fetchServerStatus();
             } else if (pageId === 'donate-page') {
                 document.getElementById('donate-page').classList.add('active');
@@ -611,6 +613,16 @@
         function closeDonateModal() {
             document.getElementById('donate-modal').style.display = 'none';
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            showPage('hero-page');
+            // Проверяем статус каждые 30 секунд, если мы на странице серверов
+            setInterval(() => {
+                if (document.getElementById('servers-page').classList.contains('active')) {
+                    fetchServerStatus();
+                }
+            }, 30000);
+        });
     </script>
 </body>
 </html>
