@@ -34,7 +34,6 @@
             z-index: 1;
         }
 
-        /* Затемнение поверх видео */
         .hero-overlay {
             position: absolute;
             top: 0;
@@ -45,7 +44,6 @@
             z-index: 2;
         }
 
-        /* Контент поверх видео */
         .hero-content {
             position: relative;
             z-index: 3;
@@ -106,7 +104,7 @@
             box-shadow: 0 0 35px rgba(239, 68, 68, 0.8);
         }
 
-        /* === НАВИГАЦИЯ (поверх видео, прозрачная) === */
+        /* === НАВИГАЦИЯ: ЛОГО СЛЕВА, КНОПКИ ПО ЦЕНТРУ === */
         .navbar {
             position: absolute;
             top: 0;
@@ -127,16 +125,23 @@
             font-weight: 800;
             color: white;
             text-decoration: none;
+            flex-shrink: 0;
         }
 
         .nav-logo span {
             color: #ef4444;
         }
 
+        .nav-center {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 30px;
+            gap: 40px;
         }
 
         .nav-links a {
@@ -145,13 +150,19 @@
             font-weight: 500;
             transition: 0.3s;
             cursor: pointer;
+            font-size: 1rem;
         }
 
         .nav-links a:hover {
             color: #ef4444;
         }
 
-        /* === ОСТАЛЬНЫЕ СТРАНИЦЫ (Сервера, Донат) — отдельный фон === */
+        .nav-placeholder {
+            width: 120px;
+            flex-shrink: 0;
+        }
+
+        /* === ОСТАЛЬНЫЕ СТРАНИЦЫ === */
         .page {
             display: none;
             background: linear-gradient(135deg, #0b0f1a 0%, #0a0e17 100%);
@@ -179,7 +190,6 @@
             color: #ef4444;
         }
 
-        /* Карточки серверов */
         .server-card {
             background: #11161f;
             border: 1px solid #232a36;
@@ -222,7 +232,6 @@
             background: #ef4444;
         }
 
-        /* Донат карточки */
         .cards-grid {
             display: flex;
             flex-wrap: wrap;
@@ -341,7 +350,6 @@
         }
         .pay-btn:hover { opacity: 0.8; }
 
-        /* Модалка */
         .modal {
             display: none;
             position: fixed;
@@ -374,24 +382,35 @@
             font-weight: bold;
             cursor: pointer;
         }
+
+        @media (max-width: 768px) {
+            .logo { font-size: 2.5rem; }
+            .description { font-size: 1rem; }
+            .play-btn { padding: 12px 32px; font-size: 1rem; }
+            .nav-links { gap: 20px; }
+            .nav-links a { font-size: 0.85rem; }
+            .nav-placeholder { width: 60px; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- НАВИГАЦИЯ (поверх видео) -->
+    <!-- НАВИГАЦИЯ -->
     <nav class="navbar">
         <a href="#" class="nav-logo" onclick="showPage('hero-page')">RAZE<span>Servers</span></a>
-        <ul class="nav-links">
-            <li><a onclick="showPage('hero-page')">Главная</a></li>
-            <li><a onclick="showPage('servers-page')">Сервера</a></li>
-            <li><a onclick="showPage('donate-page')">Донат</a></li>
-        </ul>
+        <div class="nav-center">
+            <ul class="nav-links">
+                <li><a onclick="showPage('hero-page')">Главная</a></li>
+                <li><a onclick="showPage('servers-page')">Сервера</a></li>
+                <li><a onclick="showPage('donate-page')">Донат</a></li>
+            </ul>
+        </div>
+        <div class="nav-placeholder"></div>
     </nav>
 
     <!-- ГЛАВНАЯ СТРАНИЦА С ВИДЕО -->
     <div id="hero-page" class="hero">
         <video autoplay muted loop playsinline class="hero-video" poster="https://cdn.pixabay.com/video/2022/07/01/123456-720p.mp4">
-            <!-- ВСТАВЬ СВОЁ ВИДЕО ВМЕСТО ЭТОЙ ССЫЛКИ -->
             <source src="https://cdn.pixabay.com/video/2024/03/15/204120-91827364_large.mp4" type="video/mp4">
             Ваш браузер не поддерживает видео.
         </video>
@@ -406,15 +425,15 @@
         </div>
     </div>
 
-    <!-- СТРАНИЦА СЕРВЕРОВ -->
+    <!-- СТРАНИЦА СЕРВЕРОВ (ОБНОВЛЁННАЯ) -->
     <div id="servers-page" class="page">
         <div class="container">
             <h2>Наши <span>Сервера</span></h2>
 
             <div class="server-card">
                 <div class="server-info">
-                    <h3>RAZE #1 | Washington PvP | Escalation</h3>
-                    <p>IP: 127.0.0.1:27015</p>
+                    <h3>RAZE #1 | Дикое выживание [Kits, TPA, Home] RU</h3>
+                    <p>IP: 127.0.0.1:27015 | Карта: Escalation</p>
                 </div>
                 <div class="server-status">🟢 Онлайн: 45 / 60</div>
                 <button class="copy-btn" onclick="copyIP('127.0.0.1:27015')">📋 Копировать IP</button>
@@ -437,7 +456,7 @@
             <h2>Магазин <span>Привилегий</span></h2>
 
             <div class="cards-grid">
-                <!-- SHERIFF 79₽ -->
+                <!-- SHERIFF -->
                 <div class="card card-sheriff">
                     <div class="card-title">SHERIFF</div>
                     <div class="price">79 ₽</div>
@@ -450,7 +469,7 @@
                     <button class="pay-btn" onclick="openDonateModal('Sheriff', '/kit sheriff')">Купить</button>
                 </div>
 
-                <!-- SNIPER LITE 149₽ -->
+                <!-- SNIPER LITE -->
                 <div class="card card-sniper-lite">
                     <div class="card-title">SNIPER LITE</div>
                     <div class="price">149 ₽</div>
@@ -464,7 +483,7 @@
                     <button class="pay-btn" onclick="openDonateModal('Sniper Lite', '/kit sniperlite')">Купить</button>
                 </div>
 
-                <!-- RAID LITE 199₽ -->
+                <!-- RAID LITE -->
                 <div class="card card-raid-lite">
                     <div class="card-title">RAID LITE</div>
                     <div class="price">199 ₽</div>
@@ -478,7 +497,7 @@
                     <button class="pay-btn" onclick="openDonateModal('RAID Lite', '/kit raidlite')">Купить</button>
                 </div>
 
-                <!-- SNIPER PRO 249₽ -->
+                <!-- SNIPER PRO -->
                 <div class="card card-sniper-pro">
                     <div class="card-title">SNIPER PRO</div>
                     <div class="price">249 ₽</div>
@@ -492,7 +511,7 @@
                     <button class="pay-btn" onclick="openDonateModal('Sniper Pro', '/kit sniperpro + /kit sniperlite')">Купить</button>
                 </div>
 
-                <!-- RAID PRO 349₽ -->
+                <!-- RAID PRO -->
                 <div class="card card-raid-pro">
                     <div class="card-title">RAID PRO</div>
                     <div class="price">349 ₽</div>
@@ -506,7 +525,7 @@
                     <button class="pay-btn" onclick="openDonateModal('RAID Pro', '/kit raidpro + /kit raidlite')">Купить</button>
                 </div>
 
-                <!-- DEADZONE 549₽ -->
+                <!-- DEADZONE -->
                 <div class="card card-deadzone">
                     <div class="card-title">DEADZONE</div>
                     <div class="price">549 ₽</div>
@@ -534,9 +553,7 @@
     </div>
 
     <script>
-        // Переключение страниц
         function showPage(pageId) {
-            // Скрываем все страницы
             document.getElementById('hero-page').style.display = 'none';
             document.getElementById('servers-page').classList.remove('active');
             document.getElementById('donate-page').classList.remove('active');
@@ -551,13 +568,11 @@
             window.scrollTo(0, 0);
         }
 
-        // Копирование IP
         function copyIP(ip) {
             navigator.clipboard.writeText(ip);
             alert('IP адрес ' + ip + ' скопирован!');
         }
 
-        // Модалка доната
         function openDonateModal(kitName, kitsList) {
             document.getElementById('modal-kit-name').innerText = kitName;
             document.getElementById('modal-kits-list').innerText = kitsList;
@@ -568,7 +583,6 @@
             document.getElementById('donate-modal').style.display = 'none';
         }
 
-        // Убедимся, что главная страница с видео отображается по умолчанию
         document.addEventListener('DOMContentLoaded', () => {
             showPage('hero-page');
         });
