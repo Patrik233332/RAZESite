@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>RAZE Servers | Unturned Russia</title>
+    <title>RAZE Servers</title>
     
     <!-- FAVICON — ЧЁРНЫЙ КВАДРАТ + КРАСНАЯ БУКВА R -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='0' fill='%23000000'/%3E%3Ctext x='50' y='72' font-size='70' font-family='Arial, sans-serif' font-weight='bold' fill='%23ef4444' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
@@ -21,7 +21,6 @@
             background-color: #0a0e17;
         }
 
-        /* === ОБЩИЙ ФОН ДЛЯ ВСЕГО САЙТА (карта Russia — зимний лес) === */
         body::before {
             content: '';
             position: fixed;
@@ -37,7 +36,6 @@
             background-repeat: no-repeat;
         }
 
-        /* Затемнение поверх фона для читаемости текста */
         body::after {
             content: '';
             position: fixed;
@@ -46,10 +44,9 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.75);
         }
 
-        /* === ГЛАВНАЯ СТРАНИЦА (видео поверх фона) === */
         .hero {
             position: relative;
             width: 100%;
@@ -65,7 +62,7 @@
             height: 100%;
             object-fit: cover;
             z-index: 1;
-            opacity: 0.4;
+            opacity: 0.35;
         }
 
         .hero-overlay {
@@ -74,7 +71,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 2;
         }
 
@@ -112,7 +109,7 @@
         .description {
             font-size: 1.2rem;
             color: #e0e0e0;
-            max-width: 600px;
+            max-width: 700px;
             margin-bottom: 40px;
             text-shadow: 0 2px 10px rgba(0,0,0,0.5);
             line-height: 1.6;
@@ -138,7 +135,6 @@
             box-shadow: 0 0 35px rgba(239, 68, 68, 0.8);
         }
 
-        /* === НАВИГАЦИЯ === */
         .navbar {
             position: fixed;
             top: 0;
@@ -160,6 +156,7 @@
             color: white;
             text-decoration: none;
             flex-shrink: 0;
+            cursor: pointer;
         }
 
         .nav-logo span {
@@ -196,7 +193,6 @@
             flex-shrink: 0;
         }
 
-        /* === СТРАНИЦЫ === */
         .page {
             display: none;
             min-height: 100vh;
@@ -224,7 +220,6 @@
             color: #ef4444;
         }
 
-        /* === КАРТОЧКИ СЕРВЕРОВ === */
         .server-card {
             background: rgba(17, 22, 31, 0.9);
             backdrop-filter: blur(5px);
@@ -254,10 +249,6 @@
             font-weight: bold;
         }
 
-        .server-status.offline {
-            color: #ef4444;
-        }
-
         .copy-btn {
             background: #1e293b;
             color: white;
@@ -272,7 +263,6 @@
             background: #ef4444;
         }
 
-        /* === ВРЕМЕННОЕ СООБЩЕНИЕ ДЛЯ СТРАНИЦЫ ДОНАТА === */
         .coming-soon {
             background: rgba(17, 22, 31, 0.9);
             backdrop-filter: blur(5px);
@@ -295,6 +285,38 @@
             font-size: 1.1rem;
         }
 
+        .social-corner {
+            position: fixed;
+            bottom: 20px;
+            left: 25px;
+            z-index: 100;
+            display: flex;
+            gap: 12px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            padding: 8px 16px;
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease, opacity 0.2s;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.1);
+            opacity: 0.9;
+        }
+
+        .social-icon img {
+            width: 28px;
+            height: 28px;
+            display: block;
+        }
+
         @media (max-width: 768px) {
             .logo { font-size: 2.5rem; }
             .description { font-size: 1rem; }
@@ -302,13 +324,15 @@
             .nav-links { gap: 20px; }
             .nav-links a { font-size: 0.85rem; }
             .nav-placeholder { width: 60px; }
+            .social-corner { bottom: 12px; left: 12px; padding: 5px 12px; }
+            .social-icon img { width: 22px; height: 22px; }
         }
     </style>
 </head>
 <body>
 
     <nav class="navbar">
-        <a href="#" class="nav-logo" onclick="showPage('hero-page')">RAZE<span>Servers</span></a>
+        <a class="nav-logo" onclick="showPage('hero-page')">RAZE<span>Servers</span></a>
         <div class="nav-center">
             <ul class="nav-links">
                 <li><a onclick="showPage('hero-page')">Главная</a></li>
@@ -319,6 +343,12 @@
         <div class="nav-placeholder"></div>
     </nav>
 
+    <div class="social-corner">
+        <a href="https://vk.com/razeservers" target="_blank" class="social-icon" title="Наше сообщество ВКонтакте">
+            <img src="https://cdn-icons-png.flaticon.com/512/5968/5968835.png" alt="VK">
+        </a>
+    </div>
+
     <div id="hero-page" class="hero">
         <video autoplay muted loop playsinline class="hero-video">
             <source src="https://cdn.pixabay.com/video/2024/03/15/204120-91827364_large.mp4" type="video/mp4">
@@ -326,7 +356,7 @@
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <div class="logo">RAZE <span>SERVERS</span></div>
-            <p class="description">❄️ Выживание в заснеженной России!<br>Kits, TPA, Home, рейды, хардкор и честная PvP атмосфера на карте Russia.</p>
+            <p class="description">⚡ Жесткое выживание на карте Escalation!<br>Улучшенные луаты, 3D-печать оружия, схроны, Kits, TPA и ежедневные рейды. Готовь снаряжение — здесь выживает сильнейший.</p>
             <button class="play-btn" onclick="showPage('servers-page')">▶ ИГРАТЬ</button>
         </div>
     </div>
@@ -337,7 +367,7 @@
             <div class="server-card">
                 <div class="server-info">
                     <h3>RAZE #1 | Выживание [Kits, TPA, Home] RU</h3>
-                    <p>IP: 26.28.229.239:27115 | Карта: Russia</p>
+                    <p>IP: 26.28.229.239:27115 | Карта: Escalation</p>
                 </div>
                 <div class="server-status" id="server-status">
                     🟢 Онлайн: <span id="online-count">0 / 60</span>
@@ -382,7 +412,6 @@
             alert('IP адрес ' + ip + ' скопирован!');
         }
 
-        // Симуляция онлайн-игроков
         function updateOnlineCount() {
             const onlineSpan = document.getElementById('online-count');
             if (onlineSpan) {
