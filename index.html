@@ -233,7 +233,14 @@
             border-radius: 24px;
             padding: 25px 20px;
             text-align: center;
+            transition: all 0.3s ease;
             cursor: pointer;
+        }
+
+        .kit-card:hover {
+            transform: translateY(-5px);
+            border-color: #ef4444;
+            box-shadow: 0 10px 25px -5px rgba(239, 68, 68, 0.3);
         }
 
         .kit-name {
@@ -344,11 +351,10 @@
             justify-content: center;
             align-items: center;
             margin-bottom: 20px;
-            background: transparent;
+            background: #0f172a;
             border-radius: 16px;
             border: 2px solid #ef4444;
-            padding: 0;
-            overflow: hidden;
+            padding: 4px;
         }
 
         .kit-icon img {
@@ -357,7 +363,7 @@
             max-height: 450px;
             object-fit: contain;
             display: block;
-            border-radius: 14px;
+            border-radius: 12px;
         }
 
         .kit-full-desc {
@@ -533,12 +539,6 @@
             }
             .modal-header h3 {
                 font-size: 1.4rem;
-            }
-            .kit-icon {
-                border-radius: 12px;
-            }
-            .kit-icon img {
-                border-radius: 10px;
             }
         }
     </style>
