@@ -39,7 +39,7 @@
             width: 100%;
             height: 100%;
             z-index: -2;
-            background-image: url('Заставка.jpg');
+            background-image: url('Карта Escalation.webp');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -519,6 +519,10 @@
             margin-top: 2px;
         }
 
+        .hidden {
+            display: none;
+        }
+
         @media (max-width: 768px) {
             .logo { font-size: 2.5rem; }
             .description { font-size: 1rem; }
@@ -562,7 +566,7 @@
         <div class="nav-placeholder"></div>
     </nav>
 
-    <div class="social-corner">
+    <div id="socialCorner" class="social-corner">
         <a href="https://vk.com/razeservers" target="_blank" class="social-icon" title="Наше сообщество ВКонтакте">
             <img src="https://cdn-icons-png.flaticon.com/512/5968/5968835.png" alt="VK">
         </a>
@@ -741,6 +745,7 @@
             const heroPage = document.getElementById('hero-page');
             const serversPage = document.getElementById('servers-page');
             const donatePage = document.getElementById('donate-page');
+            const socialCorner = document.getElementById('socialCorner');
             
             // Скрываем всё
             heroPage.style.display = 'none';
@@ -751,16 +756,18 @@
             const allMenuItems = document.querySelectorAll('.nav-links a');
             allMenuItems.forEach(item => item.classList.remove('active'));
             
-            // Показываем нужную страницу и подсвечиваем соответствующий пункт
+            // Показываем нужную страницу и управляем видимостью VK блока
             if (pageId === 'hero-page') {
                 heroPage.style.display = 'block';
-                // У главной нет пункта в меню, логотип
+                socialCorner.classList.remove('hidden');
             } else if (pageId === 'servers-page') {
                 serversPage.classList.add('active');
+                socialCorner.classList.add('hidden');
                 const serversMenuItem = document.querySelector('.nav-links a[data-page="servers-page"]');
                 if (serversMenuItem) serversMenuItem.classList.add('active');
             } else if (pageId === 'donate-page') {
                 donatePage.classList.add('active');
+                socialCorner.classList.add('hidden');
                 const donateMenuItem = document.querySelector('.nav-links a[data-page="donate-page"]');
                 if (donateMenuItem) donateMenuItem.classList.add('active');
             }
