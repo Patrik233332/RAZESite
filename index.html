@@ -1,804 +1,1331 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>RAZE Servers</title>
-    
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='0' fill='%23000000'/%3E%3Ctext x='50' y='72' font-size='70' font-family='Arial, sans-serif' font-weight='bold' fill='%23ef4444' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>RAZE Servers — Выживание на Escalation</title>
 
-        ::-webkit-scrollbar {
-            width: 0;
-            height: 0;
-            display: none;
-        }
-        
-        * {
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='0' fill='%23000000'/%3E%3Ctext x='50' y='72' font-size='70' font-family='Arial, sans-serif' font-weight='bold' fill='%23ef4444' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
 
-        body {
-            font-family: 'Segoe UI', 'Roboto', 'Poppins', system-ui, sans-serif;
-            overflow-x: hidden;
-            background-color: #0a0e17;
-        }
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        /* Единый фон без затемнения */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background-image: url('Карта Escalation.webp');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-        }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
 
-        .hero {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-        }
+    ::-webkit-scrollbar-track {
+      background: #0a0e17;
+    }
 
-        .hero-video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 1;
-            opacity: 0.5;
-        }
+    ::-webkit-scrollbar-thumb {
+      background: #ef4444;
+      border-radius: 3px;
+    }
 
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            text-align: center;
-            padding: 0 20px;
-        }
+    body {
+      font-family: 'Segoe UI', 'Roboto', 'Poppins', system-ui, sans-serif;
+      overflow-x: hidden;
+      background-color: #0a0e17;
+      color: #e0e0e0;
+    }
 
-        .logo {
-            font-size: 5rem;
-            font-weight: 900;
-            letter-spacing: 4px;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #ffffff, #ef4444, #facc15);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 30px rgba(239, 68, 68, 0.3);
-        }
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background-image: url('Карта Escalation.webp');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+    }
 
-        .logo span {
-            background: none;
-            -webkit-background-clip: unset;
-            background-clip: unset;
-            color: #ef4444;
-        }
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: radial-gradient(ellipse at center, rgba(10, 14, 23, 0.3) 0%, rgba(10, 14, 23, 0.85) 100%);
+      pointer-events: none;
+    }
 
-        .description {
-            font-size: 1.2rem;
-            color: #e0e0e0;
-            max-width: 700px;
-            margin-bottom: 40px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-            line-height: 1.6;
-        }
+    #particles-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
 
-        .play-btn {
-            background: linear-gradient(135deg, #ef4444, #b91c1c);
-            border: none;
-            padding: 16px 48px;
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: white;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
 
-        .play-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 35px rgba(239, 68, 68, 0.8);
-        }
+    .hero-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+      opacity: 0.35;
+    }
 
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 5%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(10, 14, 23, 0.4) 50%, rgba(0, 0, 0, 0.7) 100%);
+    }
 
-        .nav-logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: white;
-            text-decoration: none;
-            flex-shrink: 0;
-            cursor: pointer;
-        }
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      text-align: center;
+      padding: 0 20px;
+    }
 
-        .nav-logo span {
-            color: #ef4444;
-        }
+    .logo {
+      font-size: 5rem;
+      font-weight: 900;
+      letter-spacing: 4px;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #ffffff, #ef4444, #facc15);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 40px rgba(239, 68, 68, 0.3);
+      animation: logoGlow 3s ease-in-out infinite alternate;
+    }
 
-        .nav-center {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
+    @keyframes logoGlow {
+      0% {
+        text-shadow: 0 0 30px rgba(239, 68, 68, 0.3);
+      }
+      100% {
+        text-shadow: 0 0 60px rgba(239, 68, 68, 0.6), 0 0 120px rgba(239, 68, 68, 0.2);
+      }
+    }
 
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 40px;
-        }
+    .logo span {
+      background: none;
+      -webkit-background-clip: unset;
+      background-clip: unset;
+      color: #ef4444;
+    }
 
-        .nav-links a {
-            color: #e0e0e0;
-            text-decoration: none;
-            font-weight: 500;
-            transition: 0.3s;
-            cursor: pointer;
-            font-size: 1rem;
-        }
+    .description {
+      font-size: 1.2rem;
+      color: #e0e0e0;
+      max-width: 700px;
+      margin-bottom: 40px;
+      text-shadow: 0 2px 15px rgba(0, 0, 0, 0.7);
+      line-height: 1.6;
+    }
 
-        .nav-links a:hover {
-            color: #ef4444;
-        }
+    .play-btn {
+      background: linear-gradient(135deg, #ef4444, #b91c1c);
+      border: none;
+      padding: 16px 48px;
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: white;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+      box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      position: relative;
+      overflow: hidden;
+    }
 
-        .nav-links a.active {
-            color: #ef4444;
-        }
+    .play-btn::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
 
-        .nav-placeholder {
-            width: 120px;
-            flex-shrink: 0;
-        }
+    .play-btn:hover::before {
+      opacity: 1;
+    }
 
-        .page {
-            display: none;
-            min-height: 100vh;
-            padding: 100px 20px 60px;
-        }
+    .play-btn:hover {
+      transform: scale(1.05) translateY(-2px);
+      box-shadow: 0 0 40px rgba(239, 68, 68, 0.8);
+    }
 
-        .page.active {
-            display: block;
-        }
+    .play-btn:active {
+      transform: scale(0.98);
+    }
 
-        .page .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 5%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+    }
 
-        .page h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 40px;
-            color: white;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-        }
+    .navbar.scrolled {
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(239, 68, 68, 0.2);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    }
 
-        .page h2 span {
-            color: #ef4444;
-        }
+    .nav-logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: white;
+      text-decoration: none;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      user-select: none;
+    }
 
-        .kits-wrapper {
-            max-height: calc(100vh - 250px);
-            overflow-y: auto;
-            overflow-x: visible;
-        }
+    .nav-logo:hover {
+      opacity: 0.85;
+    }
 
-        .kits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 20px;
-            padding-right: 20px;
-        }
+    .nav-logo span {
+      color: #ef4444;
+    }
 
-        .kit-card {
-            background: #111827;
-            border-radius: 20px;
-            padding: 28px 20px;
-            text-align: center;
-            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
-            cursor: pointer;
-            position: relative;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-            border: 1px solid #1f2937;
-        }
+    .nav-center {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
 
-        .kit-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 25px -12px rgba(239, 68, 68, 0.3);
-            border-color: #ef4444;
-        }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 40px;
+    }
 
-        .kit-name {
-            font-size: 1.9rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 12px;
-            letter-spacing: -0.5px;
-        }
+    .nav-links a {
+      color: #e0e0e0;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s;
+      cursor: pointer;
+      font-size: 1rem;
+      position: relative;
+      padding: 4px 0;
+    }
 
-        .kit-price {
-            font-size: 1.7rem;
-            font-weight: 700;
-            color: #f97316;
-            margin-bottom: 18px;
-            text-shadow: 0 0 8px rgba(249, 115, 22, 0.3);
-        }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #ef4444;
+      transition: width 0.3s ease;
+    }
 
-        .kit-desc {
-            color: #9ca3af;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
 
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
+    .nav-links a:hover {
+      color: #ef4444;
+    }
 
-        .modal-content {
-            background: #1e293b;
-            border-radius: 32px;
-            max-width: 700px;
-            width: 90%;
-            max-height: 85vh;
-            overflow-y: auto;
-            padding: 25px;
-            position: relative;
-            animation: modalOpen 0.3s ease;
-            border: 1px solid #ef4444;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
+    .nav-links a.active {
+      color: #ef4444;
+    }
 
-        @keyframes modalOpen {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
+    .nav-placeholder {
+      width: 120px;
+      flex-shrink: 0;
+    }
 
-        .modal-header {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #334155;
-            padding-bottom: 15px;
-            position: relative;
-        }
+    .burger-btn {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      z-index: 1001;
+    }
 
-        .modal-header h3 {
-            font-size: 1.8rem;
-            background: linear-gradient(135deg, #ffffff, #ef4444);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-align: center;
-        }
+    .burger-btn span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: white;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
 
-        .close-modal {
-            background: none;
-            border: none;
-            color: #94a3b8;
-            font-size: 2rem;
-            cursor: pointer;
-            transition: 0.2s;
-            position: absolute;
-            right: 0;
-            top: 0;
-        }
+    .burger-btn.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
 
-        .close-modal:hover {
-            color: #ef4444;
-        }
+    .burger-btn.active span:nth-child(2) {
+      opacity: 0;
+    }
 
-        .kit-icon {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
-            background: #0f172a;
-            border-radius: 20px;
-            padding: 10px;
-        }
+    .burger-btn.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
 
-        .kit-icon img {
-            width: 100%;
-            height: auto;
-            max-height: 350px;
-            object-fit: contain;
-            display: block;
-            border-radius: 12px;
-        }
+    .page {
+      display: none;
+      min-height: 100vh;
+      padding: 100px 20px 60px;
+      position: relative;
+      z-index: 1;
+    }
 
-        .kit-full-desc {
-            color: #cbd5e1;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
+    .page.active {
+      display: block;
+      animation: pageFadeIn 0.4s ease;
+    }
 
-        .kit-items {
-            background: #0f172a;
-            border-radius: 20px;
-            padding: 15px;
-            margin: 20px 0;
-        }
+    @keyframes pageFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-        .kit-items h4 {
-            color: #facc15;
-            margin-bottom: 12px;
-            font-size: 1.2rem;
-        }
+    .page .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
 
-        .kit-items ul {
-            list-style: none;
-            padding-left: 0;
-        }
+    .page h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 40px;
+      color: white;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
 
-        .kit-items li {
-            padding: 8px 0;
-            border-bottom: 1px solid #334155;
-            color: #e2e8f0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+    .page h2 span {
+      color: #ef4444;
+    }
 
-        .kit-items li:last-child {
-            border-bottom: none;
-        }
+    .kits-wrapper {
+      max-height: calc(100vh - 250px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-right: 8px;
+    }
 
-        .buy-btn {
-            background: linear-gradient(135deg, #ef4444, #b91c1c);
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 40px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: white;
-            cursor: pointer;
-            transition: 0.3s;
-            margin-top: 15px;
-        }
+    .kits-wrapper::-webkit-scrollbar {
+      width: 4px;
+    }
 
-        .buy-btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
-        }
+    .kits-wrapper::-webkit-scrollbar-thumb {
+      background: #ef4444;
+      border-radius: 2px;
+    }
 
-        .server-card {
-            background: rgba(17, 22, 31, 0.9);
-            border: 1px solid #232a36;
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
+    .kits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 20px;
+      padding-right: 12px;
+    }
 
-        .server-info h3 {
-            font-size: 1.3rem;
-            margin-bottom: 8px;
-            color: white;
-        }
+    .kit-card {
+      background: linear-gradient(145deg, #111827, #0f172a);
+      border-radius: 20px;
+      padding: 28px 20px;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.2, 0, 0, 1);
+      cursor: pointer;
+      position: relative;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+      border: 1px solid #1f2937;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: cardAppear 0.5s ease forwards;
+    }
 
-        .server-info p {
-            color: #8e9aaf;
-        }
+    @keyframes cardAppear {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-        .server-status {
-            color: #10b981;
-            font-weight: bold;
-        }
+    .kit-card:nth-child(1) {
+      animation-delay: 0.05s;
+    }
 
-        .copy-btn {
-            background: #1e293b;
-            color: white;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+    .kit-card:nth-child(2) {
+      animation-delay: 0.15s;
+    }
 
-        .copy-btn:hover {
-            background: #ef4444;
-        }
+    .kit-card:nth-child(3) {
+      animation-delay: 0.25s;
+    }
 
-        .social-corner {
-            position: fixed;
-            bottom: 25px;
-            left: 25px;
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            background: rgba(0, 0, 0, 0.55);
-            backdrop-filter: blur(8px);
-            padding: 8px 12px;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: 0.2s;
-        }
-        
-        .social-corner:hover {
-            background: rgba(0, 0, 0, 0.75);
-            border-color: #ef4444;
-        }
+    .kit-card:nth-child(4) {
+      animation-delay: 0.35s;
+    }
 
-        .social-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s ease;
-        }
+    .kit-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #ef4444, transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
 
-        .social-icon:hover {
-            transform: scale(1.1);
-        }
+    .kit-card:hover::before {
+      opacity: 1;
+    }
 
-        .social-icon img {
-            width: 28px;
-            height: 28px;
-            display: block;
-        }
-        
-        .social-label {
-            font-size: 10px;
-            color: #cbd5e1;
-            text-align: center;
-            letter-spacing: 0.3px;
-            font-weight: 500;
-            background: rgba(0,0,0,0.4);
-            padding: 2px 6px;
-            border-radius: 20px;
-            margin-top: 2px;
-        }
+    .kit-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 25px 40px -12px rgba(239, 68, 68, 0.35);
+      border-color: #ef4444;
+    }
 
-        .hidden {
-            display: none;
-        }
+    .kit-card:active {
+      transform: translateY(-2px) scale(0.98);
+    }
 
-        @media (max-width: 768px) {
-            .logo { font-size: 2.5rem; }
-            .description { font-size: 1rem; }
-            .play-btn { padding: 12px 32px; font-size: 1rem; }
-            .nav-links { gap: 20px; }
-            .nav-links a { font-size: 0.85rem; }
-            .nav-placeholder { width: 60px; }
-            .social-corner { bottom: 12px; left: 12px; padding: 5px 10px; }
-            .social-icon img { width: 22px; height: 22px; }
-            .social-label { font-size: 8px; }
-            .kits-wrapper {
-                max-height: calc(100vh - 200px);
-            }
-            .kits-grid {
-                grid-template-columns: 1fr;
-                padding-right: 12px;
-                gap: 20px;
-            }
-            .kit-name {
-                font-size: 1.5rem;
-            }
-            .kit-price {
-                font-size: 1.3rem;
-            }
-            .modal-content {
-                max-width: 95%;
-                padding: 15px;
-            }
-            .kit-icon img {
-                max-height: 200px;
-            }
-            .modal-header h3 {
-                font-size: 1.4rem;
-            }
-        }
-    </style>
+    .kit-name {
+      font-size: 1.9rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+
+    .kit-price {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: #f97316;
+      margin-bottom: 18px;
+      text-shadow: 0 0 8px rgba(249, 115, 22, 0.3);
+    }
+
+    .kit-desc {
+      color: #9ca3af;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-content {
+      background: linear-gradient(145deg, #1e293b, #0f172a);
+      border-radius: 32px;
+      max-width: 700px;
+      width: 90%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 30px;
+      position: relative;
+      animation: modalOpen 0.35s cubic-bezier(0.2, 0, 0, 1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-content::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .modal-content::-webkit-scrollbar-thumb {
+      background: #ef4444;
+      border-radius: 2px;
+    }
+
+    @keyframes modalOpen {
+      from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #334155;
+      padding-bottom: 15px;
+      position: relative;
+    }
+
+    .modal-header h3 {
+      font-size: 1.8rem;
+      background: linear-gradient(135deg, #ffffff, #ef4444);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-align: center;
+    }
+
+    .close-modal {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-size: 2.2rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      line-height: 1;
+      padding: 4px 8px;
+      border-radius: 8px;
+    }
+
+    .close-modal:hover {
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    .kit-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      background: #0f172a;
+      border-radius: 20px;
+      padding: 10px;
+      min-height: 120px;
+    }
+
+    .kit-icon img {
+      width: 100%;
+      height: auto;
+      max-height: 350px;
+      object-fit: contain;
+      display: block;
+      border-radius: 12px;
+    }
+
+    .kit-full-desc {
+      color: #cbd5e1;
+      line-height: 1.7;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+    }
+
+    .kit-items {
+      background: #0f172a;
+      border-radius: 20px;
+      padding: 18px;
+      margin: 20px 0;
+      border: 1px solid #1f2937;
+    }
+
+    .kit-items h4 {
+      color: #facc15;
+      margin-bottom: 12px;
+      font-size: 1.2rem;
+    }
+
+    .kit-items ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .kit-items li {
+      padding: 10px 0;
+      border-bottom: 1px solid #1f2937;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.95rem;
+    }
+
+    .kit-items li:last-child {
+      border-bottom: none;
+    }
+
+    .kit-items li::before {
+      content: '▸';
+      color: #ef4444;
+      font-weight: bold;
+    }
+
+    .buy-btn {
+      background: linear-gradient(135deg, #ef4444, #b91c1c);
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 40px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 15px;
+      letter-spacing: 1px;
+    }
+
+    .buy-btn:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 25px rgba(239, 68, 68, 0.6);
+    }
+
+    .buy-btn:active {
+      transform: scale(0.98);
+    }
+
+    .server-card {
+      background: rgba(17, 22, 31, 0.9);
+      border: 1px solid #232a36;
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      transition: all 0.3s;
+    }
+
+    .server-card:hover {
+      border-color: #ef4444;
+      box-shadow: 0 8px 30px rgba(239, 68, 68, 0.1);
+    }
+
+    .server-info h3 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+      color: white;
+    }
+
+    .server-info p {
+      color: #8e9aaf;
+    }
+
+    .server-status {
+      color: #10b981;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .server-status .status-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background: #10b981;
+      border-radius: 50%;
+      animation: pulseDot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5);
+      }
+      50% {
+        box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+      }
+    }
+
+    .copy-btn {
+      background: #1e293b;
+      color: white;
+      border: 1px solid #334155;
+      padding: 10px 24px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 0.9rem;
+    }
+
+    .copy-btn:hover {
+      background: #ef4444;
+      border-color: #ef4444;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    }
+
+    .copy-btn:active {
+      transform: scale(0.95);
+    }
+
+    .social-corner {
+      position: fixed;
+      bottom: 25px;
+      left: 25px;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 8px 12px;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      transition: all 0.3s;
+    }
+
+    .social-corner:hover {
+      background: rgba(0, 0, 0, 0.75);
+      border-color: #ef4444;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(239, 68, 68, 0.15);
+    }
+
+    .social-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+    }
+
+    .social-icon:hover {
+      transform: scale(1.15);
+    }
+
+    .social-icon img {
+      width: 28px;
+      height: 28px;
+      display: block;
+      border-radius: 4px;
+    }
+
+    .social-label {
+      font-size: 10px;
+      color: #cbd5e1;
+      text-align: center;
+      letter-spacing: 0.3px;
+      font-weight: 500;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 2px 6px;
+      border-radius: 20px;
+      margin-top: 2px;
+    }
+
+    .scroll-top {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      z-index: 100;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #ef4444;
+      color: white;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .scroll-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .scroll-top:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(239, 68, 68, 0.5);
+    }
+
+    .scroll-top:active {
+      transform: scale(0.9);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 768px) {
+      .logo {
+        font-size: 2.5rem;
+      }
+      .description {
+        font-size: 1rem;
+      }
+      .play-btn {
+        padding: 12px 32px;
+        font-size: 1rem;
+      }
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+        transition: right 0.4s cubic-bezier(0.2, 0, 0, 1);
+        z-index: 999;
+      }
+      .nav-links.open {
+        right: 0;
+      }
+      .nav-links a {
+        font-size: 1.2rem;
+      }
+      .nav-center {
+        position: static;
+        transform: none;
+      }
+      .burger-btn {
+        display: flex;
+      }
+      .nav-placeholder {
+        width: 0;
+      }
+      .social-corner {
+        bottom: 12px;
+        left: 12px;
+        padding: 5px 10px;
+      }
+      .social-icon img {
+        width: 22px;
+        height: 22px;
+      }
+      .social-label {
+        font-size: 8px;
+      }
+      .scroll-top {
+        bottom: 12px;
+        right: 12px;
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+      }
+      .kits-wrapper {
+        max-height: none;
+        overflow-y: visible;
+      }
+      .kits-grid {
+        grid-template-columns: 1fr;
+        padding-right: 0;
+        gap: 20px;
+      }
+      .kit-name {
+        font-size: 1.5rem;
+      }
+      .kit-price {
+        font-size: 1.3rem;
+      }
+      .modal-content {
+        max-width: 95%;
+        padding: 20px;
+        max-height: 90vh;
+      }
+      .kit-icon img {
+        max-height: 200px;
+      }
+      .modal-header h3 {
+        font-size: 1.4rem;
+      }
+      .page h2 {
+        font-size: 1.8rem;
+      }
+      .server-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+      }
+      .server-info h3 {
+        font-size: 1.1rem;
+      }
+      .copy-btn {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-links {
+        width: 85%;
+      }
+      .logo {
+        font-size: 2rem;
+      }
+      .description {
+        font-size: 0.9rem;
+      }
+      .play-btn {
+        padding: 10px 24px;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <a class="nav-logo" onclick="showPage('hero-page')">RAZE<span>Servers</span></a>
-        <div class="nav-center">
-            <ul class="nav-links">
-                <li><a onclick="showPage('servers-page')" data-page="servers-page">Сервера</a></li>
-                <li><a onclick="showPage('donate-page')" data-page="donate-page">Донат</a></li>
-            </ul>
-        </div>
-        <div class="nav-placeholder"></div>
-    </nav>
+  <canvas id="particles-canvas"></canvas>
 
-    <div id="socialCorner" class="social-corner">
-        <a href="https://vk.com/razeservers" target="_blank" class="social-icon" title="Наше сообщество ВКонтакте">
-            <img src="https://cdn-icons-png.flaticon.com/512/5968/5968835.png" alt="VK">
-        </a>
-        <div class="social-label">Сообщество VK</div>
+  <nav class="navbar" id="navbar">
+    <a class="nav-logo" onclick="showPage('hero-page')">RAZE<span>Servers</span></a>
+    <div class="nav-center">
+      <ul class="nav-links" id="navLinks">
+        <li><a onclick="showPage('servers-page')" data-page="servers-page">Сервера</a></li>
+        <li><a onclick="showPage('donate-page')" data-page="donate-page">Донат</a></li>
+      </ul>
     </div>
+    <button class="burger-btn" id="burgerBtn" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
 
-    <div id="hero-page" class="hero">
-        <video autoplay muted loop playsinline class="hero-video">
-            <source src="https://cdn.pixabay.com/video/2024/03/15/204120-91827364_large.mp4" type="video/mp4">
-        </video>
-        <div class="hero-content">
-            <div class="logo">RAZE <span>SERVERS</span></div>
-            <p class="description">⚡ Жесткое выживание на карте Escalation!<br>Улучшенные луаты, 3D-печать оружия, схроны, Kits, TPA и ежедневные рейды. Готовь снаряжение — здесь выживает сильнейший.</p>
-            <button class="play-btn" onclick="showPage('servers-page')">▶ ИГРАТЬ</button>
-        </div>
+  <div id="socialCorner" class="social-corner">
+    <a href="https://vk.com/razeservers" target="_blank" class="social-icon" title="Наше сообщество ВКонтакте">
+      <img src="https://cdn-icons-png.flaticon.com/512/5968/5968835.png" alt="VK">
+    </a>
+    <div class="social-label">Сообщество VK</div>
+  </div>
+
+  <button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" aria-label="Наверх">↑</button>
+
+  <div id="hero-page" class="hero">
+    <video autoplay muted loop playsinline class="hero-video">
+      <source src="https://cdn.pixabay.com/video/2024/03/15/204120-91827364_large.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="logo">RAZE <span>SERVERS</span></div>
+      <p class="description">⚡ Жесткое выживание на карте Escalation!<br>Улучшенные луаты, 3D-печать оружия, схроны, Kits, TPA и ежедневные рейды. Готовь снаряжение — здесь выживает сильнейший.</p>
+      <button class="play-btn" onclick="showPage('servers-page')">▶ ИГРАТЬ</button>
     </div>
+  </div>
 
-    <div id="servers-page" class="page">
-        <div class="container">
-            <h2>Наши <span>Сервера</span></h2>
-            <div class="server-card">
-                <div class="server-info">
-                    <h3>RAZE #1 | Выживание [Kits, TPA, Home] RU</h3>
-                    <p>IP: 26.28.229.239:27115 | Карта: Escalation</p>
-                </div>
-                <div class="server-status" id="server-status">
-                    🟢 Онлайн: <span id="online-count">0 / 60</span>
-                </div>
-                <button class="copy-btn" onclick="copyIP('26.28.229.239:27115')">📋 Копировать IP</button>
-            </div>
+  <div id="servers-page" class="page">
+    <div class="container">
+      <h2>Наши <span>Сервера</span></h2>
+      <div class="server-card">
+        <div class="server-info">
+          <h3>RAZE #1 | Выживание [Kits, TPA, Home] RU</h3>
+          <p>IP: 26.28.229.239:27115 | Карта: Escalation</p>
         </div>
-    </div>
-
-    <div id="donate-page" class="page">
-        <div class="container">
-            <h2>Магазин <span>Привилегий</span></h2>
-            <div class="kits-wrapper">
-                <div class="kits-grid" id="kitsGrid"></div>
-            </div>
+        <div class="server-status">
+          <span class="status-dot"></span> Онлайн: <span id="online-count">0 / 60</span>
         </div>
+        <button class="copy-btn" onclick="copyIP('26.28.229.239:27115')">📋 Копировать IP</button>
+      </div>
     </div>
+  </div>
 
-    <div id="kitModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalKitName">Kit Name</h3>
-                <button class="close-modal" id="closeModalBtn">&times;</button>
-            </div>
-            <div class="kit-icon" id="modalKitIcon"></div>
-            <div class="kit-full-desc" id="modalKitDesc"></div>
-            <div class="kit-items" id="modalKitItems"></div>
-            <button class="buy-btn" id="modalBuyBtn">💎 Приобрести</button>
-        </div>
+  <div id="donate-page" class="page">
+    <div class="container">
+      <h2>Магазин <span>Привилегий</span></h2>
+      <div class="kits-wrapper">
+        <div class="kits-grid" id="kitsGrid"></div>
+      </div>
     </div>
+  </div>
 
-    <script>
-        const kitsData = [
-            {
-                name: "Cop",
-                price: 79,
-                desc: "Полицейский набор для выживания и правопорядка на Escalation.",
-                icon: "Наборкопа.jpg",
-                items: [
-                    "Костюм полицейского",
-                    "Револьвер",
-                    "Полицейская дубинка",
-                    "Доп. обоймы для кобальта (2 шт)",
-                    "4 улучшенных бинта",
-                    "4 энергетика",
-                    "4 консервы"
-                ],
-                fullDesc: "Cop — кит для тех, кто предпочитает порядок и контроль. Даёт отличный стартовый набор брони, проверенное оружие и всё необходимое для выживания в первые часы игры."
-            },
-            {
-                name: "SniperLite",
-                price: 129,
-                desc: "Лёгкая снайперская экипировка для дальнего боя.",
-                icon: "https://cdn-icons-png.flaticon.com/512/2879/2879649.png",
-                items: [
-                    "Снайперка Private с прицелом 5x",
-                    "Военный нож",
-                    "Доп. обоймы для снайперки (2 шт)",
-                    "3 энергетика",
-                    "3 консервы",
-                    "3 улучшенных бинта"
-                ],
-                fullDesc: "SniperLite — идеальный выбор для начинающих снайперов. Ты получишь надёжную винтовку с оптикой 5x, запас патронов и всё необходимое для засадной войны на Escalation."
-            },
-            {
-                name: "RIOT",
-                price: 199,
-                desc: "Штурмовой набор. Броня, дробовик и гранаты для ближнего боя.",
-                icon: "https://cdn-icons-png.flaticon.com/512/2187/2187574.png",
-                items: [
-                    "Бронекостюм RIOT (4 ур.)",
-                    "Дробовик Peacemaker",
-                    "Светошумовые гранаты x4",
-                    "Щит штурмовой",
-                    "Медицинская сумка"
-                ],
-                fullDesc: "Для тех, кто предпочитает действовать напролом! RIOT даёт преимущество в городских боях и рейдах на чужие базы. Высокая живучесть и подавляющая огневая мощь."
-            },
-            {
-                name: "SniperPro",
-                price: 249,
-                desc: "Элитный снайперский комплект. Максимальная дальность и убийство с одного выстрела.",
-                icon: "https://cdn-icons-png.flaticon.com/512/1863/1863766.png",
-                items: [
-                    "Винтовка Timberwolf (уникальная, 1 выстрел)",
-                    "Маскировочный костюм 'Призрак'",
-                    "Баллистический калькулятор",
-                    "Патроны .50 AP (бронебойные) x15",
-                    "Автоматическая турель-приманка"
-                ],
-                fullDesc: "Высший пилотаж снайперской стрельбы. Кит для профессионалов, которые умеют ждать и наносить один точный выстрел. Пробивает любую броню, идеален для устранения целей на дальних дистанциях."
-            }
-        ];
+  <div id="kitModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modalKitName">Kit Name</h3>
+        <button class="close-modal" id="closeModalBtn">&times;</button>
+      </div>
+      <div class="kit-icon" id="modalKitIcon"></div>
+      <div class="kit-full-desc" id="modalKitDesc"></div>
+      <div class="kit-items" id="modalKitItems"></div>
+      <button class="buy-btn" id="modalBuyBtn">💎 Приобрести</button>
+    </div>
+  </div>
 
-        function renderKits() {
-            const grid = document.getElementById('kitsGrid');
-            if (!grid) return;
-            
-            grid.innerHTML = '';
-            
-            kitsData.forEach((kit, index) => {
-                const card = document.createElement('div');
-                card.className = 'kit-card';
-                card.setAttribute('data-kit-index', index);
-                card.innerHTML = `
-                    <div class="kit-name">${kit.name}</div>
-                    <div class="kit-price">${kit.price} ₽</div>
-                    <div class="kit-desc">${kit.desc}</div>
-                `;
-                card.addEventListener('click', () => openModal(index));
-                grid.appendChild(card);
-            });
+  <script>
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let animFrame;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.3;
+        this.speedY = (Math.random() - 0.5) * 0.3;
+        this.opacity = Math.random() * 0.4 + 0.1;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+          this.reset();
         }
+      }
 
-        function openModal(kitIndex) {
-            const kit = kitsData[kitIndex];
-            if (!kit) return;
-            
-            const modal = document.getElementById('kitModal');
-            const modalKitName = document.getElementById('modalKitName');
-            const modalKitIcon = document.getElementById('modalKitIcon');
-            const modalKitDesc = document.getElementById('modalKitDesc');
-            const modalKitItems = document.getElementById('modalKitItems');
-            const buyBtn = document.getElementById('modalBuyBtn');
-            
-            modalKitName.textContent = kit.name;
-            modalKitIcon.innerHTML = `<img src="${kit.icon}" alt="${kit.name}">`;
-            modalKitDesc.textContent = kit.fullDesc;
-            
-            let itemsHtml = '<ul>';
-            kit.items.forEach(item => {
-                itemsHtml += `<li>🎯 ${item}</li>`;
-            });
-            itemsHtml += '</ul>';
-            modalKitItems.innerHTML = `<h4>📦 Комплектация:</h4>${itemsHtml}`;
-            
-            buyBtn.onclick = () => {
-                alert(`🛒 Вы выбрали кит "${kit.name}" за ${kit.price} ₽.\nОплата и выдача в ближайшее время!`);
-                modal.style.display = 'none';
-            };
-            
-            modal.style.display = 'flex';
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(239, 68, 68, ${this.opacity})`;
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < 80; i++) {
+      particles.push(new Particle());
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 150) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(239, 68, 68, ${0.06 * (1 - dist / 150)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
         }
+      }
+      animFrame = requestAnimationFrame(animateParticles);
+    }
 
-        function closeModal() {
-            const modal = document.getElementById('kitModal');
-            modal.style.display = 'none';
-        }
+    animateParticles();
 
-        function showPage(pageId) {
-            const heroPage = document.getElementById('hero-page');
-            const serversPage = document.getElementById('servers-page');
-            const donatePage = document.getElementById('donate-page');
-            const socialCorner = document.getElementById('socialCorner');
-            
-            heroPage.style.display = 'none';
-            serversPage.classList.remove('active');
-            donatePage.classList.remove('active');
-            
-            const allMenuItems = document.querySelectorAll('.nav-links a');
-            allMenuItems.forEach(item => item.classList.remove('active'));
-            
-            if (pageId === 'hero-page') {
-                heroPage.style.display = 'block';
-                socialCorner.classList.remove('hidden');
-            } else if (pageId === 'servers-page') {
-                serversPage.classList.add('active');
-                socialCorner.classList.add('hidden');
-                const serversMenuItem = document.querySelector('.nav-links a[data-page="servers-page"]');
-                if (serversMenuItem) serversMenuItem.classList.add('active');
-            } else if (pageId === 'donate-page') {
-                donatePage.classList.add('active');
-                socialCorner.classList.add('hidden');
-                const donateMenuItem = document.querySelector('.nav-links a[data-page="donate-page"]');
-                if (donateMenuItem) donateMenuItem.classList.add('active');
-            }
-            
-            window.scrollTo(0, 0);
-        }
+    const kitsData = [
+      {
+        name: "Cop",
+        price: 79,
+        desc: "Полицейский набор для выживания и правопорядка на Escalation.",
+        icon: "Наборкопа.jpg",
+        items: [
+          "Костюм полицейского",
+          "Револьвер",
+          "Полицейская дубинка",
+          "Доп. обоймы для кобальта (2 шт)",
+          "4 улучшенных бинта",
+          "4 энергетика",
+          "4 консервы"
+        ],
+        fullDesc: "Cop — кит для тех, кто предпочитает порядок и контроль. Даёт отличный стартовый набор брони, проверенное оружие и всё необходимое для выживания в первые часы игры."
+      },
+      {
+        name: "SniperLite",
+        price: 129,
+        desc: "Лёгкая снайперская экипировка для дальнего боя.",
+        icon: "https://cdn-icons-png.flaticon.com/512/2879/2879649.png",
+        items: [
+          "Снайперка Private с прицелом 5x",
+          "Военный нож",
+          "Доп. обоймы для снайперки (2 шт)",
+          "3 энергетика",
+          "3 консервы",
+          "3 улучшенных бинта"
+        ],
+        fullDesc: "SniperLite — идеальный выбор для начинающих снайперов. Ты получишь надёжную винтовку с оптикой 5x, запас патронов и всё необходимое для засадной войны на Escalation."
+      },
+      {
+        name: "RIOT",
+        price: 199,
+        desc: "Штурмовой набор. Броня, дробовик и гранаты для ближнего боя.",
+        icon: "https://cdn-icons-png.flaticon.com/512/2187/2187574.png",
+        items: [
+          "Бронекостюм RIOT (4 ур.)",
+          "Дробовик Peacemaker",
+          "Светошумовые гранаты x4",
+          "Щит штурмовой",
+          "Медицинская сумка"
+        ],
+        fullDesc: "Для тех, кто предпочитает действовать напролом! RIOT даёт преимущество в городских боях и рейдах на чужие базы. Высокая живучесть и подавляющая огневая мощь."
+      },
+      {
+        name: "SniperPro",
+        price: 249,
+        desc: "Элитный снайперский комплект. Максимальная дальность и убийство с одного выстрела.",
+        icon: "https://cdn-icons-png.flaticon.com/512/1863/1863766.png",
+        items: [
+          "Винтовка Timberwolf (уникальная, 1 выстрел)",
+          "Маскировочный костюм 'Призрак'",
+          "Баллистический калькулятор",
+          "Патроны .50 AP (бронебойные) x15",
+          "Автоматическая турель-приманка"
+        ],
+        fullDesc: "Высший пилотаж снайперской стрельбы. Кит для профессионалов, которые умеют ждать и наносить один точный выстрел. Пробивает любую броню, идеален для устранения целей на дальних дистанциях."
+      }
+    ];
 
-        function copyIP(ip) {
-            navigator.clipboard.writeText(ip);
-            alert('IP адрес ' + ip + ' скопирован!');
-        }
+    function renderKits() {
+      const grid = document.getElementById('kitsGrid');
+      if (!grid) return;
 
-        function updateOnlineCount() {
-            const onlineSpan = document.getElementById('online-count');
-            if (onlineSpan) {
-                const fakeOnline = Math.floor(Math.random() * 37) + 12;
-                onlineSpan.innerText = fakeOnline + ' / 60';
-            }
-        }
+      grid.innerHTML = '';
 
-        document.addEventListener('DOMContentLoaded', () => {
-            showPage('hero-page');
-            updateOnlineCount();
-            setInterval(updateOnlineCount, 30000);
-            renderKits();
-            
-            const modal = document.getElementById('kitModal');
-            const closeBtn = document.getElementById('closeModalBtn');
-            if (closeBtn) {
-                closeBtn.addEventListener('click', closeModal);
-            }
-            window.addEventListener('click', (e) => {
-                if (e.target === modal) closeModal();
-            });
+      kitsData.forEach((kit, index) => {
+        const card = document.createElement('div');
+        card.className = 'kit-card';
+        card.setAttribute('data-kit-index', index);
+        card.innerHTML = `
+          <div class="kit-name">${kit.name}</div>
+          <div class="kit-price">${kit.price} ₽</div>
+          <div class="kit-desc">${kit.desc}</div>
+        `;
+        card.addEventListener('click', () => openModal(index));
+        grid.appendChild(card);
+      });
+    }
+
+    function openModal(kitIndex) {
+      const kit = kitsData[kitIndex];
+      if (!kit) return;
+
+      const modal = document.getElementById('kitModal');
+      const modalKitName = document.getElementById('modalKitName');
+      const modalKitIcon = document.getElementById('modalKitIcon');
+      const modalKitDesc = document.getElementById('modalKitDesc');
+      const modalKitItems = document.getElementById('modalKitItems');
+      const buyBtn = document.getElementById('modalBuyBtn');
+
+      modalKitName.textContent = kit.name;
+      modalKitIcon.innerHTML = `<img src="${kit.icon}" alt="${kit.name}">`;
+      modalKitDesc.textContent = kit.fullDesc;
+
+      let itemsHtml = '<ul>';
+      kit.items.forEach(item => {
+        itemsHtml += `<li>🎯 ${item}</li>`;
+      });
+      itemsHtml += '</ul>';
+      modalKitItems.innerHTML = `<h4>📦 Комплектация:</h4>${itemsHtml}`;
+
+      buyBtn.onclick = () => {
+        alert(`🛒 Вы выбрали кит "${kit.name}" за ${kit.price} ₽.\nОплата и выдача в ближайшее время!`);
+        modal.style.display = 'none';
+      };
+
+      modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('kitModal');
+      modal.style.display = 'none';
+    }
+
+    let activePage = 'hero-page';
+
+    function showPage(pageId) {
+      const heroPage = document.getElementById('hero-page');
+      const serversPage = document.getElementById('servers-page');
+      const donatePage = document.getElementById('donate-page');
+      const socialCorner = document.getElementById('socialCorner');
+
+      heroPage.style.display = 'none';
+      serversPage.classList.remove('active');
+      donatePage.classList.remove('active');
+
+      const allMenuItems = document.querySelectorAll('.nav-links a');
+      allMenuItems.forEach(item => item.classList.remove('active'));
+
+      if (pageId === 'hero-page') {
+        heroPage.style.display = 'block';
+        socialCorner.classList.remove('hidden');
+        activePage = 'hero-page';
+      } else if (pageId === 'servers-page') {
+        serversPage.classList.add('active');
+        socialCorner.classList.add('hidden');
+        activePage = 'servers-page';
+        const serversMenuItem = document.querySelector('.nav-links a[data-page="servers-page"]');
+        if (serversMenuItem) serversMenuItem.classList.add('active');
+      } else if (pageId === 'donate-page') {
+        donatePage.classList.add('active');
+        socialCorner.classList.add('hidden');
+        activePage = 'donate-page';
+        const donateMenuItem = document.querySelector('.nav-links a[data-page="donate-page"]');
+        if (donateMenuItem) donateMenuItem.classList.add('active');
+      }
+
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    function copyIP(ip) {
+      navigator.clipboard.writeText(ip);
+      alert('IP адрес ' + ip + ' скопирован!');
+    }
+
+    function updateOnlineCount() {
+      const onlineSpan = document.getElementById('online-count');
+      if (onlineSpan) {
+        const fakeOnline = Math.floor(Math.random() * 37) + 12;
+        onlineSpan.innerText = fakeOnline + ' / 60';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      showPage('hero-page');
+      updateOnlineCount();
+      setInterval(updateOnlineCount, 30000);
+      renderKits();
+
+      const modal = document.getElementById('kitModal');
+      const closeBtn = document.getElementById('closeModalBtn');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+      }
+      window.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      const burgerBtn = document.getElementById('burgerBtn');
+      const navLinks = document.getElementById('navLinks');
+      if (burgerBtn && navLinks) {
+        burgerBtn.addEventListener('click', () => {
+          burgerBtn.classList.toggle('active');
+          navLinks.classList.toggle('open');
         });
-    </script>
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+          link.addEventListener('click', () => {
+            burgerBtn.classList.remove('active');
+            navLinks.classList.remove('open');
+          });
+        });
+      }
+
+      const navbar = document.getElementById('navbar');
+      const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+          navbar.classList.add('scrolled');
+          scrollTopBtn.classList.add('visible');
+        } else {
+          navbar.classList.remove('scrolled');
+          scrollTopBtn.classList.remove('visible');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
