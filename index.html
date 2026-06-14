@@ -15,21 +15,18 @@
     }
 
     ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
+      width: 0;
+      height: 0;
+      display: none;
     }
 
-    ::-webkit-scrollbar-track {
-      background: #0a0e17;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: #ef4444;
-      border-radius: 3px;
+    * {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
 
     body {
-      font-family: 'Segoe UI', 'Roboto', 'Poppins', system-ui, sans-serif;
+      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
       overflow-x: hidden;
       background-color: #0a0e17;
       color: #e0e0e0;
@@ -58,7 +55,7 @@
       width: 100%;
       height: 100%;
       z-index: -1;
-      background: radial-gradient(ellipse at center, rgba(10, 14, 23, 0.3) 0%, rgba(10, 14, 23, 0.85) 100%);
+      background: radial-gradient(ellipse at center, rgba(10, 14, 23, 0.2) 0%, rgba(10, 14, 23, 0.9) 100%);
       pointer-events: none;
     }
 
@@ -362,43 +359,34 @@
     }
 
     .kits-wrapper {
-      max-height: calc(100vh - 250px);
-      overflow-y: auto;
-      overflow-x: hidden;
-      padding-right: 8px;
-    }
-
-    .kits-wrapper::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    .kits-wrapper::-webkit-scrollbar-thumb {
-      background: #ef4444;
-      border-radius: 2px;
+      overflow: visible;
+      max-height: none;
+      padding-right: 0;
     }
 
     .kits-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 30px;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
       margin-top: 20px;
-      padding-right: 12px;
     }
 
     .kit-card {
-      background: linear-gradient(145deg, #111827, #0f172a);
-      border-radius: 20px;
-      padding: 28px 20px;
-      text-align: center;
+      background: linear-gradient(165deg, #0f172a 0%, #1a1a2e 100%);
+      border-radius: 24px;
+      padding: 0;
+      text-align: left;
       transition: all 0.4s cubic-bezier(0.2, 0, 0, 1);
       cursor: pointer;
       position: relative;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-      border: 1px solid #1f2937;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(99, 102, 241, 0.15);
       overflow: hidden;
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(24px);
       animation: cardAppear 0.5s ease forwards;
+      display: flex;
+      flex-direction: column;
     }
 
     @keyframes cardAppear {
@@ -430,49 +418,136 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, #ef4444, transparent);
-      opacity: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #6366f1, #a855f7, #6366f1);
+      background-size: 200% 100%;
+      animation: shimmerBar 3s ease-in-out infinite;
+      opacity: 0.6;
       transition: opacity 0.3s;
+    }
+
+    @keyframes shimmerBar {
+      0%,
+      100% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
     }
 
     .kit-card:hover::before {
       opacity: 1;
     }
 
+    .kit-card::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 20%, rgba(99, 102, 241, 0.06), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.5s;
+      pointer-events: none;
+    }
+
+    .kit-card:hover::after {
+      opacity: 1;
+    }
+
     .kit-card:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 25px 40px -12px rgba(239, 68, 68, 0.35);
-      border-color: #ef4444;
+      transform: translateY(-8px);
+      box-shadow: 0 24px 48px -12px rgba(99, 102, 241, 0.3);
+      border-color: rgba(99, 102, 241, 0.4);
     }
 
     .kit-card:active {
       transform: translateY(-2px) scale(0.98);
     }
 
+    .kit-card-inner {
+      padding: 28px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    .kit-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      color: #a5b4fc;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+      width: fit-content;
+    }
+
     .kit-name {
-      font-size: 1.9rem;
+      font-size: 1.8rem;
       font-weight: 800;
-      background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      margin-bottom: 12px;
+      color: #f1f5f9;
+      margin-bottom: 8px;
       letter-spacing: -0.5px;
+      line-height: 1.1;
     }
 
     .kit-price {
-      font-size: 1.7rem;
+      font-size: 1.6rem;
       font-weight: 700;
-      color: #f97316;
-      margin-bottom: 18px;
-      text-shadow: 0 0 8px rgba(249, 115, 22, 0.3);
+      color: #a78bfa;
+      margin-bottom: 14px;
+      text-shadow: 0 0 12px rgba(167, 139, 250, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .kit-price::before {
+      content: '💎';
+      font-size: 1.2rem;
     }
 
     .kit-desc {
-      color: #9ca3af;
+      color: #94a3b8;
       font-size: 0.9rem;
-      line-height: 1.5;
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .kit-card-footer {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(99, 102, 241, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .kit-items-count {
+      color: #64748b;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .kit-arrow {
+      color: #6366f1;
+      font-size: 1.2rem;
+      transition: transform 0.3s;
+    }
+
+    .kit-card:hover .kit-arrow {
+      transform: translateX(4px);
     }
 
     .modal {
@@ -494,7 +569,7 @@
     }
 
     .modal-content {
-      background: linear-gradient(145deg, #1e293b, #0f172a);
+      background: linear-gradient(165deg, #1a1a2e, #0f172a);
       border-radius: 32px;
       max-width: 700px;
       width: 90%;
@@ -503,17 +578,14 @@
       padding: 30px;
       position: relative;
       animation: modalOpen 0.35s cubic-bezier(0.2, 0, 0, 1);
-      border: 1px solid rgba(239, 68, 68, 0.3);
+      border: 1px solid rgba(99, 102, 241, 0.3);
       box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.6);
     }
 
     .modal-content::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    .modal-content::-webkit-scrollbar-thumb {
-      background: #ef4444;
-      border-radius: 2px;
+      width: 0;
+      height: 0;
+      display: none;
     }
 
     @keyframes modalOpen {
@@ -532,14 +604,14 @@
       justify-content: center;
       align-items: center;
       margin-bottom: 20px;
-      border-bottom: 1px solid #334155;
+      border-bottom: 1px solid rgba(99, 102, 241, 0.15);
       padding-bottom: 15px;
       position: relative;
     }
 
     .modal-header h3 {
       font-size: 1.8rem;
-      background: linear-gradient(135deg, #ffffff, #ef4444);
+      background: linear-gradient(135deg, #f1f5f9, #a78bfa);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
@@ -572,10 +644,11 @@
       justify-content: center;
       align-items: center;
       margin-bottom: 20px;
-      background: #0f172a;
+      background: rgba(15, 23, 42, 0.6);
       border-radius: 20px;
       padding: 10px;
       min-height: 120px;
+      border: 1px solid rgba(99, 102, 241, 0.1);
     }
 
     .kit-icon img {
@@ -595,15 +668,15 @@
     }
 
     .kit-items {
-      background: #0f172a;
+      background: rgba(15, 23, 42, 0.6);
       border-radius: 20px;
       padding: 18px;
       margin: 20px 0;
-      border: 1px solid #1f2937;
+      border: 1px solid rgba(99, 102, 241, 0.1);
     }
 
     .kit-items h4 {
-      color: #facc15;
+      color: #a78bfa;
       margin-bottom: 12px;
       font-size: 1.2rem;
     }
@@ -615,7 +688,7 @@
 
     .kit-items li {
       padding: 10px 0;
-      border-bottom: 1px solid #1f2937;
+      border-bottom: 1px solid rgba(99, 102, 241, 0.08);
       color: #e2e8f0;
       display: flex;
       align-items: center;
@@ -629,12 +702,12 @@
 
     .kit-items li::before {
       content: '▸';
-      color: #ef4444;
+      color: #a78bfa;
       font-weight: bold;
     }
 
     .buy-btn {
-      background: linear-gradient(135deg, #ef4444, #b91c1c);
+      background: linear-gradient(135deg, #6366f1, #7c3aed);
       width: 100%;
       padding: 16px;
       border: none;
@@ -650,7 +723,7 @@
 
     .buy-btn:hover {
       transform: scale(1.02);
-      box-shadow: 0 0 25px rgba(239, 68, 68, 0.6);
+      box-shadow: 0 0 25px rgba(99, 102, 241, 0.5);
     }
 
     .buy-btn:active {
@@ -658,9 +731,9 @@
     }
 
     .server-card {
-      background: rgba(17, 22, 31, 0.9);
-      border: 1px solid #232a36;
-      border-radius: 20px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(99, 102, 241, 0.15);
+      border-radius: 24px;
       padding: 30px;
       margin-bottom: 20px;
       display: flex;
@@ -672,8 +745,8 @@
     }
 
     .server-card:hover {
-      border-color: #ef4444;
-      box-shadow: 0 8px 30px rgba(239, 68, 68, 0.1);
+      border-color: rgba(99, 102, 241, 0.4);
+      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.1);
     }
 
     .server-info h3 {
@@ -704,7 +777,8 @@
     }
 
     @keyframes pulseDot {
-      0%, 100% {
+      0%,
+      100% {
         box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5);
       }
       50% {
@@ -713,9 +787,9 @@
     }
 
     .copy-btn {
-      background: #1e293b;
+      background: rgba(99, 102, 241, 0.15);
       color: white;
-      border: 1px solid #334155;
+      border: 1px solid rgba(99, 102, 241, 0.3);
       padding: 10px 24px;
       border-radius: 50px;
       cursor: pointer;
@@ -724,10 +798,10 @@
     }
 
     .copy-btn:hover {
-      background: #ef4444;
-      border-color: #ef4444;
+      background: #6366f1;
+      border-color: #6366f1;
       transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
     }
 
     .copy-btn:active {
@@ -754,9 +828,9 @@
 
     .social-corner:hover {
       background: rgba(0, 0, 0, 0.75);
-      border-color: #ef4444;
+      border-color: #6366f1;
       transform: translateY(-2px);
-      box-shadow: 0 4px 20px rgba(239, 68, 68, 0.15);
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.15);
     }
 
     .social-icon {
@@ -797,7 +871,7 @@
       width: 48px;
       height: 48px;
       border-radius: 50%;
-      background: #ef4444;
+      background: #6366f1;
       color: white;
       border: none;
       font-size: 1.5rem;
@@ -806,7 +880,7 @@
       visibility: hidden;
       transform: translateY(20px);
       transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -820,7 +894,7 @@
 
     .scroll-top:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(239, 68, 68, 0.5);
+      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
     }
 
     .scroll-top:active {
@@ -892,14 +966,12 @@
         height: 40px;
         font-size: 1.2rem;
       }
-      .kits-wrapper {
-        max-height: none;
-        overflow-y: visible;
-      }
       .kits-grid {
         grid-template-columns: 1fr;
-        padding-right: 0;
-        gap: 20px;
+        gap: 18px;
+      }
+      .kit-card-inner {
+        padding: 22px 18px 18px;
       }
       .kit-name {
         font-size: 1.5rem;
@@ -1056,7 +1128,6 @@
       constructor() {
         this.reset();
       }
-
       reset() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
@@ -1065,7 +1136,6 @@
         this.speedY = (Math.random() - 0.5) * 0.3;
         this.opacity = Math.random() * 0.4 + 0.1;
       }
-
       update() {
         this.x += this.speedX;
         this.y += this.speedY;
@@ -1073,11 +1143,10 @@
           this.reset();
         }
       }
-
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(239, 68, 68, ${this.opacity})`;
+        ctx.fillStyle = `rgba(99, 102, 241, ${this.opacity})`;
         ctx.fill();
       }
     }
@@ -1092,7 +1161,6 @@
         p.update();
         p.draw();
       });
-
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
@@ -1102,7 +1170,7 @@
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(239, 68, 68, ${0.06 * (1 - dist / 150)})`;
+            ctx.strokeStyle = `rgba(99, 102, 241, ${0.06 * (1 - dist / 150)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -1113,8 +1181,7 @@
 
     animateParticles();
 
-    const kitsData = [
-      {
+    const kitsData = [{
         name: "Cop",
         price: 79,
         desc: "Полицейский набор для выживания и правопорядка на Escalation.",
@@ -1186,9 +1253,18 @@
         card.className = 'kit-card';
         card.setAttribute('data-kit-index', index);
         card.innerHTML = `
-          <div class="kit-name">${kit.name}</div>
-          <div class="kit-price">${kit.price} ₽</div>
-          <div class="kit-desc">${kit.desc}</div>
+          <div class="kit-card-inner">
+            <div class="kit-badge">KIT</div>
+            <div class="kit-name">${kit.name}</div>
+            <div class="kit-price">${kit.price} ₽</div>
+            <div class="kit-desc">${kit.desc}</div>
+            <div class="kit-card-footer">
+              <div class="kit-items-count">
+                <span>📦 ${kit.items.length} предметов</span>
+              </div>
+              <div class="kit-arrow">→</div>
+            </div>
+          </div>
         `;
         card.addEventListener('click', () => openModal(index));
         grid.appendChild(card);
@@ -1230,8 +1306,6 @@
       modal.style.display = 'none';
     }
 
-    let activePage = 'hero-page';
-
     function showPage(pageId) {
       const heroPage = document.getElementById('hero-page');
       const serversPage = document.getElementById('servers-page');
@@ -1248,17 +1322,14 @@
       if (pageId === 'hero-page') {
         heroPage.style.display = 'block';
         socialCorner.classList.remove('hidden');
-        activePage = 'hero-page';
       } else if (pageId === 'servers-page') {
         serversPage.classList.add('active');
         socialCorner.classList.add('hidden');
-        activePage = 'servers-page';
         const serversMenuItem = document.querySelector('.nav-links a[data-page="servers-page"]');
         if (serversMenuItem) serversMenuItem.classList.add('active');
       } else if (pageId === 'donate-page') {
         donatePage.classList.add('active');
         socialCorner.classList.add('hidden');
-        activePage = 'donate-page';
         const donateMenuItem = document.querySelector('.nav-links a[data-page="donate-page"]');
         if (donateMenuItem) donateMenuItem.classList.add('active');
       }
