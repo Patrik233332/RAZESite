@@ -8,6 +8,7 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='0' fill='%23000000'/%3E%3Ctext x='50' y='72' font-size='70' font-family='Arial, sans-serif' font-weight='bold' fill='%23ef4444' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
 
 <style>
+/* БАЗОВЫЕ СТИЛИ */
 * {
 margin: 0;
 padding: 0;
@@ -32,7 +33,7 @@ background-color: #0a0e17;
 color: #e0e0e0;
 }
 
-/* Фон с оверлеем */
+/* ФОН */
 body::before {
 content: '';
 position: fixed;
@@ -60,7 +61,7 @@ background: radial-gradient(ellipse at center, rgba(10, 14, 23, 0.2) 0%, rgba(10
 pointer-events: none;
 }
 
-/* Частицы фона */
+/* ЧАСТИЦЫ */
 #particles-canvas {
 position: fixed;
 top: 0;
@@ -71,7 +72,7 @@ z-index: 0;
 pointer-events: none;
 }
 
-/* ===== HERO ===== */
+/* HERO */
 .hero {
 position: relative;
 width: 100%;
@@ -189,7 +190,7 @@ box-shadow: 0 0 40px rgba(239, 68, 68, 0.8);
 transform: scale(0.98);
 }
 
-/* ===== НАВБАР ===== */
+/* НАВБАР */
 .navbar {
 position: fixed;
 top: 0;
@@ -286,7 +287,6 @@ width: 120px;
 flex-shrink: 0;
 }
 
-/* Бургер-меню */
 .burger-btn {
 display: none;
 flex-direction: column;
@@ -319,7 +319,7 @@ opacity: 0;
 transform: rotate(-45deg) translate(5px, -5px);
 }
 
-/* ===== СТРАНИЦЫ ===== */
+/* СТРАНИЦЫ */
 .page {
 display: none;
 min-height: 100vh;
@@ -355,7 +355,7 @@ text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 color: #ef4444;
 }
 
-/* ===== КАРТОЧКИ КИТОВ ===== */
+/* КАРТОЧКИ КИТОВ */
 .kits-wrapper {
 overflow: visible;
 max-height: none;
@@ -529,7 +529,7 @@ transition: transform 0.3s;
 transform: translateX(4px);
 }
 
-/* ===== МОДАЛКА ===== */
+/* МОДАЛКА */
 .modal {
 display: none;
 position: fixed;
@@ -710,7 +710,7 @@ box-shadow: 0 0 25px rgba(99, 102, 241, 0.5);
 transform: scale(0.98);
 }
 
-/* ===== СЕРВЕРА ===== */
+/* СЕРВЕРА */
 .server-card {
 background: rgba(15, 23, 42, 0.85);
 border: 1px solid rgba(99, 102, 241, 0.15);
@@ -784,7 +784,7 @@ box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 transform: scale(0.95);
 }
 
-/* ===== СОЦ-УГОЛ ===== */
+/* СОЦ-УГОЛ */
 .social-corner {
 position: fixed;
 bottom: 25px;
@@ -840,7 +840,7 @@ border-radius: 20px;
 margin-top: 2px;
 }
 
-/* ===== КНОПКА НАВЕРХ ===== */
+/* КНОПКА НАВЕРХ */
 .scroll-top {
 position: fixed;
 bottom: 25px;
@@ -883,10 +883,11 @@ transform: scale(0.9);
 display: none !important;
 }
 
-/* ===== АДАПТАЦИЯ ДЛЯ ТЕЛЕФОНОВ ===== */
+/* ===== МОБИЛЬНАЯ ВЕРСИЯ (ПОЛНОСТЬЮ ПЕРЕРАБОТАНА) ===== */
 @media (max-width: 768px) {
+/* Навбар */
 .navbar {
-padding: 15px 5%;
+padding: 12px 5%;
 }
 
 .nav-logo {
@@ -930,124 +931,53 @@ display: flex;
 width: 0;
 }
 
-.logo {
-font-size: 2.5rem;
-letter-spacing: 2px;
+/* Hero секция */
+.hero {
+min-height: 100vh;
+height: auto;
 }
 
-.description {
-font-size: 1rem;
-margin-bottom: 30px;
-}
-
-.play-btn {
-padding: 12px 32px;
-font-size: 1rem;
-}
-
-.page {
-padding: 80px 16px 40px;
-}
-
-.page h2 {
-font-size: 1.8rem;
-margin-bottom: 25px;
-}
-
-.kits-grid {
-grid-template-columns: 1fr;
-gap: 18px;
-}
-
-.kit-card-inner {
-padding: 20px 18px 16px;
-}
-
-.kit-name {
-font-size: 1.5rem;
-}
-
-.kit-price {
-font-size: 1.3rem;
-}
-
-.kit-desc {
-font-size: 0.85rem;
-}
-
-.kit-badge {
-font-size: 0.6rem;
-padding: 3px 10px;
-}
-
-.modal-content {
-max-width: 95%;
-padding: 20px;
-max-height: 90vh;
-}
-
-.modal-header h3 {
-font-size: 1.4rem;
-}
-
-.kit-icon img {
-max-height: 180px;
-}
-
-.server-card {
-flex-direction: column;
-text-align: center;
-padding: 20px;
-}
-
-.server-info h3 {
-font-size: 1.1rem;
-}
-
-.copy-btn {
-width: 100%;
-}
-
-.social-corner {
-bottom: 12px;
-left: 12px;
-padding: 5px 10px;
-}
-
-.social-icon img {
-width: 22px;
-height: 22px;
-}
-
-.social-label {
-font-size: 8px;
-}
-
-.scroll-top {
-bottom: 12px;
-right: 12px;
-width: 40px;
-height: 40px;
-font-size: 1.2rem;
-}
-}
-
-@media (max-width: 600px) {
 .logo {
 font-size: 2rem;
+letter-spacing: 1px;
+margin-bottom: 15px;
 }
 
 .description {
-font-size: 0.85rem;
+font-size: 0.9rem;
+margin-bottom: 25px;
+padding: 0 15px;
 }
 
 .play-btn {
-padding: 10px 24px;
+padding: 12px 28px;
 font-size: 0.9rem;
 }
 
+/* Страницы */
+.page {
+padding: 70px 12px 40px;
+}
+
 .page h2 {
-font-size: 1.5rem;
+font-size: 1.6rem;
+margin-bottom: 20px;
+}
+
+/* Карточки китов */
+.kits-grid {
+grid-template-columns: 1fr;
+gap: 16px;
+}
+
+.kit-card-inner {
+padding: 18px 16px 14px;
+}
+
+.kit-badge {
+font-size: 0.55rem;
+padding: 3px 8px;
+margin-bottom: 10px;
 }
 
 .kit-name {
@@ -1055,11 +985,11 @@ font-size: 1.3rem;
 }
 
 .kit-price {
-font-size: 1.1rem;
+font-size: 1.2rem;
 }
 
 .kit-price::before {
-font-size: 1rem;
+font-size: 0.9rem;
 }
 
 .kit-desc {
@@ -1079,20 +1009,43 @@ font-size: 0.7rem;
 font-size: 1rem;
 }
 
+/* Модальное окно */
+.modal-content {
+max-width: 95%;
+padding: 18px;
+max-height: 90vh;
+}
+
 .modal-header h3 {
-font-size: 1.2rem;
+font-size: 1.3rem;
 }
 
 .close-modal {
 font-size: 1.8rem;
 }
 
+.kit-icon {
+padding: 8px;
+min-height: 100px;
+}
+
+.kit-icon img {
+max-height: 160px;
+}
+
 .kit-full-desc {
 font-size: 0.85rem;
+margin-bottom: 15px;
+}
+
+.kit-items {
+padding: 12px;
+margin: 15px 0;
 }
 
 .kit-items h4 {
 font-size: 1rem;
+margin-bottom: 8px;
 }
 
 .kit-items li {
@@ -1104,15 +1057,59 @@ padding: 6px 0;
 padding: 12px;
 font-size: 1rem;
 }
+
+/* Карточка сервера */
+.server-card {
+flex-direction: column;
+text-align: center;
+padding: 18px;
+gap: 12px;
 }
 
+.server-info h3 {
+font-size: 1.1rem;
+}
+
+.server-info p {
+font-size: 0.8rem;
+}
+
+.copy-btn {
+padding: 8px 20px;
+font-size: 0.8rem;
+width: 100%;
+}
+
+/* Соц уголок */
+.social-corner {
+bottom: 12px;
+left: 12px;
+padding: 5px 8px;
+}
+
+.social-icon img {
+width: 20px;
+height: 20px;
+}
+
+.social-label {
+font-size: 7px;
+}
+
+/* Кнопка наверх */
+.scroll-top {
+bottom: 12px;
+right: 12px;
+width: 36px;
+height: 36px;
+font-size: 1rem;
+}
+}
+
+/* Для очень маленьких телефонов */
 @media (max-width: 480px) {
-.nav-links {
-width: 80%;
-}
-
 .logo {
-font-size: 1.8rem;
+font-size: 1.6rem;
 }
 
 .description {
@@ -1120,8 +1117,8 @@ font-size: 0.8rem;
 }
 
 .play-btn {
-padding: 8px 20px;
-font-size: 0.85rem;
+padding: 10px 22px;
+font-size: 0.8rem;
 }
 
 .page h2 {
@@ -1129,16 +1126,23 @@ font-size: 1.3rem;
 }
 
 .kit-name {
-font-size: 1.2rem;
+font-size: 1.1rem;
 }
 
 .kit-price {
 font-size: 1rem;
 }
 
-.kit-badge {
-font-size: 0.55rem;
-padding: 2px 8px;
+.kit-desc {
+font-size: 0.75rem;
+}
+
+.modal-header h3 {
+font-size: 1.1rem;
+}
+
+.kit-full-desc {
+font-size: 0.8rem;
 }
 
 .server-info h3 {
@@ -1146,31 +1150,22 @@ font-size: 1rem;
 }
 
 .server-info p {
-font-size: 0.75rem;
+font-size: 0.7rem;
 }
 
 .copy-btn {
-padding: 8px 16px;
-font-size: 0.75rem;
+font-size: 0.7rem;
 }
 }
 
+/* Для экранов 360px и меньше */
 @media (max-width: 380px) {
 .logo {
-font-size: 1.5rem;
+font-size: 1.4rem;
 }
 
 .description {
 font-size: 0.75rem;
-}
-
-.play-btn {
-padding: 6px 16px;
-font-size: 0.75rem;
-}
-
-.page h2 {
-font-size: 1.2rem;
 }
 
 .kit-name {
@@ -1181,12 +1176,8 @@ font-size: 1rem;
 font-size: 0.9rem;
 }
 
-.kit-desc {
-font-size: 0.7rem;
-}
-
 .kit-card-inner {
-padding: 16px 14px 12px;
+padding: 14px 12px 10px;
 }
 }
 
@@ -1276,7 +1267,6 @@ transition-duration: 0.01ms !important;
 </div>
 
 <script>
-// ===== ЧАСТИЦЫ =====
 const canvas = document.getElementById('particles-canvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
@@ -1345,7 +1335,6 @@ animFrame = requestAnimationFrame(animateParticles);
 }
 animateParticles();
 
-// ===== ДАННЫЕ КИТОВ =====
 const kitsData = [
 {
 name: "Cop",
