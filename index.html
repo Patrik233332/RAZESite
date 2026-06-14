@@ -219,11 +219,34 @@
             color: #ef4444;
         }
 
+        /* Сетка китов со скроллом */
         .kits-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 25px;
             margin-top: 20px;
+            max-height: calc(100vh - 250px);
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        /* Скроллбар для списка китов (серый, малозаметный) */
+        .kits-grid::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .kits-grid::-webkit-scrollbar-track {
+            background: #1e293b;
+            border-radius: 10px;
+        }
+
+        .kits-grid::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 10px;
+        }
+
+        .kits-grid::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
         }
 
         .kit-card {
@@ -288,19 +311,25 @@
             animation: modalOpen 0.3s ease;
         }
 
+        /* Скроллбар внутри модального окна (серый, не выходит за границы) */
         .modal-content::-webkit-scrollbar {
             width: 6px;
         }
 
         .modal-content::-webkit-scrollbar-track {
-            background: #0f172a;
+            background: #1e293b;
             border-radius: 10px;
-            margin: 15px 0;
+            margin: 10px 0;
+            background-clip: padding-box;
         }
 
         .modal-content::-webkit-scrollbar-thumb {
-            background: #ef4444;
+            background: #475569;
             border-radius: 10px;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
         }
 
         @keyframes modalOpen {
@@ -524,16 +553,16 @@
             .social-corner { bottom: 12px; left: 12px; padding: 5px 10px; }
             .social-icon img { width: 22px; height: 22px; }
             .social-label { font-size: 8px; }
-            .kits-grid { grid-template-columns: 1fr; }
+            .kits-grid { 
+                grid-template-columns: 1fr;
+                max-height: calc(100vh - 200px);
+            }
             .modal-content {
                 max-width: 95%;
                 padding: 15px;
             }
             .kit-icon img {
                 max-height: 250px;
-            }
-            .modal-content::-webkit-scrollbar-track {
-                margin: 5px 0;
             }
             .modal-header h3 {
                 font-size: 1.4rem;
