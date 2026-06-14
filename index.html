@@ -318,16 +318,18 @@
 
         .modal-header {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             margin-bottom: 20px;
             border-bottom: 1px solid #334155;
             padding-bottom: 15px;
+            position: relative;
         }
 
         .modal-header h3 {
             font-size: 1.8rem;
             color: #ef4444;
+            text-align: center;
         }
 
         .close-modal {
@@ -337,6 +339,9 @@
             font-size: 2rem;
             cursor: pointer;
             transition: 0.2s;
+            position: absolute;
+            right: 0;
+            top: 0;
         }
 
         .close-modal:hover {
@@ -351,7 +356,8 @@
             background: #0f172a;
             border-radius: 16px;
             border: 2px solid #ef4444;
-            padding: 4px;
+            padding: 0;
+            overflow: hidden;
         }
 
         .kit-icon img {
@@ -359,8 +365,8 @@
             height: auto;
             max-height: 450px;
             object-fit: contain;
-            border-radius: 14px;
             display: block;
+            border-radius: 14px;
         }
 
         .kit-full-desc {
@@ -534,6 +540,9 @@
             }
             .modal-content::-webkit-scrollbar-track {
                 margin: 5px 0;
+            }
+            .modal-header h3 {
+                font-size: 1.4rem;
             }
         }
     </style>
