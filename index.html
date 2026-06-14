@@ -14,6 +14,17 @@
             box-sizing: border-box;
         }
 
+        ::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+            display: none;
+        }
+        
+        * {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
         body {
             font-family: 'Segoe UI', 'Roboto', 'Poppins', system-ui, sans-serif;
             overflow-x: hidden;
@@ -187,6 +198,10 @@
             color: #ef4444;
         }
 
+        .nav-links a.active {
+            color: #ef4444;
+        }
+
         .nav-placeholder {
             width: 120px;
             flex-shrink: 0;
@@ -223,21 +238,6 @@
             max-height: calc(100vh - 250px);
             overflow-y: auto;
             overflow-x: visible;
-        }
-
-        .kits-wrapper::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .kits-wrapper::-webkit-scrollbar-track {
-            background: #1e293b;
-            border-radius: 10px;
-            margin: 25px 0;
-        }
-
-        .kits-wrapper::-webkit-scrollbar-thumb {
-            background: #475569;
-            border-radius: 10px;
         }
 
         .kits-grid {
@@ -309,21 +309,6 @@
             position: relative;
             border: 1px solid #ef4444;
             animation: modalOpen 0.3s ease;
-        }
-
-        .modal-content::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .modal-content::-webkit-scrollbar-track {
-            background: #1e293b;
-            border-radius: 10px;
-            margin: 25px 0;
-        }
-
-        .modal-content::-webkit-scrollbar-thumb {
-            background: #475569;
-            border-radius: 10px;
         }
 
         @keyframes modalOpen {
@@ -570,9 +555,8 @@
         <a class="nav-logo" onclick="showPage('hero-page')">RAZE<span>Servers</span></a>
         <div class="nav-center">
             <ul class="nav-links">
-                <li><a onclick="showPage('hero-page')">Главная</a></li>
-                <li><a onclick="showPage('servers-page')">Сервера</a></li>
-                <li><a onclick="showPage('donate-page')">Донат</a></li>
+                <li><a onclick="showPage('servers-page')" data-page="servers-page">Сервера</a></li>
+                <li><a onclick="showPage('donate-page')" data-page="donate-page">Донат</a></li>
             </ul>
         </div>
         <div class="nav-placeholder"></div>
@@ -758,17 +742,29 @@
             const serversPage = document.getElementById('servers-page');
             const donatePage = document.getElementById('donate-page');
             
+            // Скрываем всё
             heroPage.style.display = 'none';
             serversPage.classList.remove('active');
             donatePage.classList.remove('active');
             
+            // Убираем подсветку со всех пунктов меню
+            const allMenuItems = document.querySelectorAll('.nav-links a');
+            allMenuItems.forEach(item => item.classList.remove('active'));
+            
+            // Показываем нужную страницу и подсвечиваем соответствующий пункт
             if (pageId === 'hero-page') {
                 heroPage.style.display = 'block';
+                // У главной нет пункта в меню, логотип
             } else if (pageId === 'servers-page') {
                 serversPage.classList.add('active');
+                const serversMenuItem = document.querySelector('.nav-links a[data-page="servers-page"]');
+                if (serversMenuItem) serversMenuItem.classList.add('active');
             } else if (pageId === 'donate-page') {
                 donatePage.classList.add('active');
+                const donateMenuItem = document.querySelector('.nav-links a[data-page="donate-page"]');
+                if (donateMenuItem) donateMenuItem.classList.add('active');
             }
+            
             window.scrollTo(0, 0);
         }
 
