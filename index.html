@@ -205,7 +205,6 @@
         .page .container {
             max-width: 1400px;
             margin: 0 auto;
-            overflow: visible;
         }
 
         .page h2 {
@@ -220,35 +219,34 @@
             color: #ef4444;
         }
 
-        .kits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            margin-top: 20px;
+        /* ОБЕРТКА ДЛЯ СКРОЛЛА */
+        .kits-wrapper {
             max-height: calc(100vh - 250px);
             overflow-y: auto;
             overflow-x: visible;
             padding-right: 10px;
-            position: relative;
         }
 
-        .kits-grid::-webkit-scrollbar {
+        .kits-wrapper::-webkit-scrollbar {
             width: 6px;
         }
 
-        .kits-grid::-webkit-scrollbar-track {
+        .kits-wrapper::-webkit-scrollbar-track {
             background: #1e293b;
             border-radius: 10px;
             margin: 25px 0;
         }
 
-        .kits-grid::-webkit-scrollbar-thumb {
+        .kits-wrapper::-webkit-scrollbar-thumb {
             background: #475569;
             border-radius: 10px;
         }
 
-        .kits-grid::-webkit-scrollbar-thumb:hover {
-            background: #64748b;
+        .kits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
         }
 
         .kit-card {
@@ -260,7 +258,7 @@
             transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
-            z-index: 1;
+            margin-right: 30px;
         }
 
         .kit-card:hover {
@@ -329,10 +327,6 @@
         .modal-content::-webkit-scrollbar-thumb {
             background: #475569;
             border-radius: 10px;
-        }
-
-        .modal-content::-webkit-scrollbar-thumb:hover {
-            background: #64748b;
         }
 
         @keyframes modalOpen {
@@ -553,9 +547,14 @@
             .social-corner { bottom: 12px; left: 12px; padding: 5px 10px; }
             .social-icon img { width: 22px; height: 22px; }
             .social-label { font-size: 8px; }
-            .kits-grid { 
-                grid-template-columns: 1fr;
+            .kits-wrapper {
                 max-height: calc(100vh - 200px);
+            }
+            .kits-grid {
+                grid-template-columns: 1fr;
+            }
+            .kit-card {
+                margin-right: 15px;
             }
             .modal-content {
                 max-width: 95%;
@@ -623,7 +622,9 @@
     <div id="donate-page" class="page">
         <div class="container">
             <h2>Магазин <span>Привилегий</span></h2>
-            <div class="kits-grid" id="kitsGrid"></div>
+            <div class="kits-wrapper">
+                <div class="kits-grid" id="kitsGrid"></div>
+            </div>
         </div>
     </div>
 
