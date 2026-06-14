@@ -21,7 +21,6 @@
             background-color: #0a0e17;
         }
 
-        /* === ОБЩИЙ ФОН === */
         body::before {
             content: '';
             position: fixed;
@@ -48,7 +47,6 @@
             background: rgba(0, 0, 0, 0.75);
         }
 
-        /* === ГЛАВНАЯ === */
         .hero {
             position: relative;
             width: 100%;
@@ -137,7 +135,6 @@
             box-shadow: 0 0 35px rgba(239, 68, 68, 0.8);
         }
 
-        /* === НАВИГАЦИЯ === */
         .navbar {
             position: fixed;
             top: 0;
@@ -196,7 +193,6 @@
             flex-shrink: 0;
         }
 
-        /* === СТРАНИЦЫ === */
         .page {
             display: none;
             min-height: 100vh;
@@ -224,7 +220,6 @@
             color: #ef4444;
         }
 
-        /* === СЕТКА КИТОВ (ДЛЯ ДОНАТА) === */
         .kits-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -268,7 +263,6 @@
             font-size: 0.9rem;
         }
 
-        /* === МОДАЛЬНОЕ ОКНО (SCROLLBOX) === */
         .modal {
             display: none;
             position: fixed;
@@ -582,7 +576,6 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО (SCROLLBOX) -->
     <div id="kitModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -597,35 +590,37 @@
     </div>
 
     <script>
-        // Данные китов
         const kitsData = [
             {
                 name: "Cop",
                 price: 79,
-                desc: "Для тех, кто начинает свой путь на сервере. Базовый набор для выживания и защиты.",
+                desc: "Полицейский набор для выживания и правопорядка на Escalation.",
                 icon: "https://cdn-icons-png.flaticon.com/512/1046/1046440.png",
                 items: [
-                    "Ключи от машины Polizei",
-                    "Арбалер",
-                    "Бронежилет 2 уровня",
-                    "Аптечка x3",
-                    "Провизия (еда и вода)"
+                    "Костюм полицейского",
+                    "Револьвер",
+                    "Полицейская дубинка",
+                    "Доп. обоймы для кобальта (2 шт)",
+                    "4 улучшенных бинта",
+                    "4 энергетика",
+                    "4 консервы"
                 ],
-                fullDesc: "Кит Cop — идеальный выбор для новичков, которые хотят быстро войти в игру и не чувствовать себя беззащитными. Вы получите транспорт, базовое оружие и всё необходимое для первых схваток на карте Escalation."
+                fullDesc: "Cop — кит для тех, кто предпочитает порядок и контроль. Даёт отличный стартовый набор брони, проверенное оружие и всё необходимое для выживания в первые часы игры."
             },
             {
                 name: "SniperLite",
                 price: 129,
-                desc: "Лёгкая снайперская экипировка. Дальний бой и маскировка.",
+                desc: "Лёгкая снайперская экипировка для дальнего боя.",
                 icon: "https://cdn-icons-png.flaticon.com/512/2879/2879649.png",
                 items: [
-                    "Винтовка Grizzly (с прицелом 16x)",
-                    "Нож охотничий",
-                    "Камуфляж 'Лес'",
-                    "Бинокль",
-                    "Патроны .50 x20"
+                    "Снайперка Private с прицелом 5x",
+                    "Военный нож",
+                    "Доп. обоймы для снайперки (2 шт)",
+                    "3 энергетика",
+                    "3 консервы",
+                    "3 улучшенных бинта"
                 ],
-                fullDesc: "Идеальный выбор для любителей тихой охоты и укрытий. SniperLite позволит контролировать большие территории, оставаясь незамеченным. Отличный баланс между мощью и маскировкой."
+                fullDesc: "SniperLite — идеальный выбор для начинающих снайперов. Ты получишь надёжную винтовку с оптикой 5x, запас патронов и всё необходимое для засадной войны на Escalation."
             },
             {
                 name: "RIOT",
@@ -657,7 +652,6 @@
             }
         ];
 
-        // Функция для отображения карточек китов
         function renderKits() {
             const grid = document.getElementById('kitsGrid');
             if (!grid) return;
@@ -678,7 +672,6 @@
             });
         }
 
-        // Открытие модального окна
         function openModal(kitIndex) {
             const kit = kitsData[kitIndex];
             if (!kit) return;
@@ -694,7 +687,6 @@
             modalKitIcon.innerHTML = `<img src="${kit.icon}" alt="${kit.name}">`;
             modalKitDesc.textContent = kit.fullDesc;
             
-            // Список предметов
             let itemsHtml = '<ul>';
             kit.items.forEach(item => {
                 itemsHtml += `<li>🎯 ${item}</li>`;
@@ -702,7 +694,6 @@
             itemsHtml += '</ul>';
             modalKitItems.innerHTML = `<h4>📦 Комплектация:</h4>${itemsHtml}`;
             
-            // Кнопка покупки (пока просто уведомление)
             buyBtn.onclick = () => {
                 alert(`🛒 Вы выбрали кит "${kit.name}" за ${kit.price} ₽.\nОплата и выдача в ближайшее время!`);
                 modal.style.display = 'none';
@@ -711,13 +702,11 @@
             modal.style.display = 'flex';
         }
 
-        // Закрытие модального окна
         function closeModal() {
             const modal = document.getElementById('kitModal');
             modal.style.display = 'none';
         }
 
-        // Прочие функции (навигация)
         function showPage(pageId) {
             const heroPage = document.getElementById('hero-page');
             const serversPage = document.getElementById('servers-page');
