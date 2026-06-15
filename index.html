@@ -617,7 +617,7 @@ transition: transform 0.3s;
 transform: translateX(4px);
 }
 
-/* ===== КАРТОЧКИ КОМАНДЫ (TEAM GRID) ===== */
+/* ===== КАРТОЧКИ КОМАНДЫ ===== */
 .team-grid {
 display: grid;
 grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -688,6 +688,36 @@ color: #94a3b8;
 font-size: 0.9rem;
 line-height: 1.5;
 padding: 0 8px;
+margin-bottom: 16px;
+}
+
+.steam-link {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+background: rgba(99, 102, 241, 0.15);
+border: 1px solid rgba(99, 102, 241, 0.3);
+border-radius: 40px;
+padding: 8px 18px;
+color: #a5b4fc;
+text-decoration: none;
+font-size: 0.8rem;
+font-weight: 500;
+transition: all 0.3s ease;
+margin-top: 8px;
+}
+
+.steam-link:hover {
+background: #6366f1;
+color: white;
+border-color: #6366f1;
+transform: translateY(-2px);
+}
+
+.steam-link img {
+width: 18px;
+height: 18px;
+filter: brightness(0) invert(1);
 }
 
 @media (max-width: 768px) {
@@ -710,6 +740,14 @@ font-size: 0.75rem;
 }
 .team-bio {
 font-size: 0.8rem;
+}
+.steam-link {
+padding: 6px 14px;
+font-size: 0.7rem;
+}
+.steam-link img {
+width: 16px;
+height: 16px;
 }
 }
 
@@ -1187,9 +1225,7 @@ display: none !important;
 
 /* ===== НАВИГАЦИЯ НА ТЕЛЕФОНАХ ===== */
 @media (max-width: 768px) {
-.navbar {
-padding: 15px 5%;
-}
+.navbar { padding: 15px 5%; }
 .nav-logo { font-size: 1.2rem; }
 .nav-links {
 position: fixed;
@@ -1293,15 +1329,21 @@ transition-duration: 0.01ms !important;
 <div class="team-grid">
 <div class="team-card">
 <div class="team-avatar">👑</div>
-<div class="team-name">Бреусов Кирилл</div>
+<div class="team-name">moneyhawe</div>
 <div class="team-role">Главный разработчик</div>
 <div class="team-bio">🛠️ Создатель сервера и архитектор всего проекта. Разработал сайт, настроил баланс и игровую экономику. Благодаря его усилиям RAZE обрёл уникальный стиль выживания на Escalation.</div>
+<a href="https://steamcommunity.com/profiles/76561199436376064/" target="_blank" class="steam-link">
+<img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Steam"> Steam: moneyhawe
+</a>
 </div>
 <div class="team-card">
 <div class="team-avatar">⚙️</div>
-<div class="team-name">Карташов Александр</div>
+<div class="team-name">Prizrak</div>
 <div class="team-role">Младший разработчик + Гл. Админ</div>
 <div class="team-bio">🌟 Создал и развивает сообщество VK, привлекая игроков. Автор уникальных китов: Cop, SniperLite, RIOT, SniperPro. Также отвечает за администрирование, следит за порядком и помогает игрокам на сервере.</div>
+<a href="https://steamcommunity.com/id/Prizrak1914" target="_blank" class="steam-link">
+<img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Steam"> Steam: Prizrak
+</a>
 </div>
 </div>
 </div>
