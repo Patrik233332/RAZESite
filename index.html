@@ -620,7 +620,7 @@ transform: translateX(4px);
 /* ===== КАРТОЧКИ КОМАНДЫ (TEAM GRID) ===== */
 .team-grid {
 display: grid;
-grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 gap: 32px;
 margin-top: 30px;
 }
@@ -1190,11 +1190,7 @@ display: none !important;
 .navbar {
 padding: 15px 5%;
 }
-
-.nav-logo {
-font-size: 1.2rem;
-}
-
+.nav-logo { font-size: 1.2rem; }
 .nav-links {
 position: fixed;
 top: 0;
@@ -1210,73 +1206,23 @@ gap: 25px;
 transition: right 0.4s cubic-bezier(0.2, 0, 0, 1);
 z-index: 999;
 }
-
-.nav-links.open {
-right: 0;
+.nav-links.open { right: 0; }
+.nav-links a { font-size: 1.2rem; padding: 10px 0; }
+.nav-center { position: static; transform: none; }
+.burger-btn { display: flex; }
+.nav-placeholder { width: 0; }
+.logo { font-size: 2rem; letter-spacing: 2px; }
+.description { font-size: 0.9rem; margin-bottom: 25px; }
+.play-btn { padding: 12px 28px; font-size: 0.9rem; }
+.page { padding: 80px 12px 40px; }
+.page h2 { font-size: 1.6rem; margin-bottom: 20px; }
 }
-
-.nav-links a {
-font-size: 1.2rem;
-padding: 10px 0;
-}
-
-.nav-center {
-position: static;
-transform: none;
-}
-
-.burger-btn {
-display: flex;
-}
-
-.nav-placeholder {
-width: 0;
-}
-
-.logo {
-font-size: 2rem;
-letter-spacing: 2px;
-}
-
-.description {
-font-size: 0.9rem;
-margin-bottom: 25px;
-}
-
-.play-btn {
-padding: 12px 28px;
-font-size: 0.9rem;
-}
-
-.page {
-padding: 80px 12px 40px;
-}
-
-.page h2 {
-font-size: 1.6rem;
-margin-bottom: 20px;
-}
-}
-
 @media (max-width: 480px) {
-.logo {
-font-size: 1.6rem;
+.logo { font-size: 1.6rem; }
+.description { font-size: 0.8rem; }
+.play-btn { padding: 10px 22px; font-size: 0.8rem; }
+.page h2 { font-size: 1.3rem; }
 }
-
-.description {
-font-size: 0.8rem;
-}
-
-.play-btn {
-padding: 10px 22px;
-font-size: 0.8rem;
-}
-
-.page h2 {
-font-size: 1.3rem;
-}
-}
-
 @media (prefers-reduced-motion: reduce) {
 *, *::before, *::after {
 animation-duration: 0.01ms !important;
@@ -1349,13 +1295,13 @@ transition-duration: 0.01ms !important;
 <div class="team-avatar">👑</div>
 <div class="team-name">Бреусов Кирилл</div>
 <div class="team-role">Главный разработчик</div>
-<div class="team-bio">Архитектор сервера RAZE. Создаёт уникальную экономику, кастомные луаты и баланс. Отвечает за стабильность и развитие проекта.</div>
+<div class="team-bio">🛠️ Создатель сервера и архитектор всего проекта. Разработал сайт, написал уникальные луаты, настроил баланс и игровую экономику. Благодаря его усилиям RAZE обрёл уникальный стиль выживания на Escalation.</div>
 </div>
 <div class="team-card">
 <div class="team-avatar">⚙️</div>
 <div class="team-name">Карташов Александр</div>
 <div class="team-role">Младший разработчик + Гл. Админ</div>
-<div class="team-bio">Техническая поддержка, моддинг и контроль порядка. Помогает внедрять фичи и следит за честной игрой на Escalation.</div>
+<div class="team-bio">🌟 Создал и развивает сообщество VK, привлекая игроков. Автор уникальных китов: Cop, SniperLite, RIOT, SniperPro. Также отвечает за администрирование, следит за порядком и помогает игрокам на сервере.</div>
 </div>
 </div>
 </div>
@@ -1397,9 +1343,7 @@ resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
 class Particle {
-constructor() {
-this.reset();
-}
+constructor() { this.reset(); }
 reset() {
 this.x = Math.random() * canvas.width;
 this.y = Math.random() * canvas.height;
@@ -1411,9 +1355,7 @@ this.opacity = Math.random() * 0.4 + 0.1;
 update() {
 this.x += this.speedX;
 this.y += this.speedY;
-if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
-this.reset();
-}
+if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
 }
 draw() {
 ctx.beginPath();
@@ -1422,17 +1364,11 @@ ctx.fillStyle = `rgba(99, 102, 241, ${this.opacity})`;
 ctx.fill();
 }
 }
-
-for (let i = 0; i < 80; i++) {
-particles.push(new Particle());
-}
+for (let i = 0; i < 80; i++) particles.push(new Particle());
 
 function animateParticles() {
 ctx.clearRect(0, 0, canvas.width, canvas.height);
-particles.forEach(p => {
-p.update();
-p.draw();
-});
+particles.forEach(p => { p.update(); p.draw(); });
 for (let i = 0; i < particles.length; i++) {
 for (let j = i + 1; j < particles.length; j++) {
 const dx = particles[i].x - particles[j].x;
@@ -1453,65 +1389,10 @@ animFrame = requestAnimationFrame(animateParticles);
 animateParticles();
 
 const kitsData = [
-{
-name: "Cop",
-price: 79,
-desc: "Полицейский набор для выживания и правопорядка на Escalation.",
-icon: "Наборкопа.jpg",
-items: [
-"Костюм полицейского",
-"Револьвер",
-"Полицейская дубинка",
-"Доп. обоймы для кобальта (2 шт)",
-"4 улучшенных бинта",
-"4 энергетика",
-"4 консервы"
-],
-fullDesc: "Cop — кит для тех, кто предпочитает порядок и контроль. Даёт отличный стартовый набор брони, проверенное оружие и всё необходимое для выживания в первые часы игры."
-},
-{
-name: "SniperLite",
-price: 129,
-desc: "Лёгкая снайперская экипировка для дальнего боя.",
-icon: "https://cdn-icons-png.flaticon.com/512/2879/2879649.png",
-items: [
-"Снайперка Private с прицелом 5x",
-"Военный нож",
-"Доп. обоймы для снайперки (2 шт)",
-"3 энергетика",
-"3 консервы",
-"3 улучшенных бинта"
-],
-fullDesc: "SniperLite — идеальный выбор для начинающих снайперов. Ты получишь надёжную винтовку с оптикой 5x, запас патронов и всё необходимое для засадной войны на Escalation."
-},
-{
-name: "RIOT",
-price: 199,
-desc: "Штурмовой набор. Броня, дробовик и гранаты для ближнего боя.",
-icon: "https://cdn-icons-png.flaticon.com/512/2187/2187574.png",
-items: [
-"Бронекостюм RIOT (4 ур.)",
-"Дробовик Peacemaker",
-"Светошумовые гранаты x4",
-"Щит штурмовой",
-"Медицинская сумка"
-],
-fullDesc: "Для тех, кто предпочитает действовать напролом! RIOT даёт преимущество в городских боях и рейдах на чужие базы. Высокая живучесть и подавляющая огневая мощь."
-},
-{
-name: "SniperPro",
-price: 249,
-desc: "Элитный снайперский комплект. Максимальная дальность и убийство с одного выстрела.",
-icon: "https://cdn-icons-png.flaticon.com/512/1863/1863766.png",
-items: [
-"Винтовка Timberwolf (уникальная, 1 выстрел)",
-"Маскировочный костюм 'Призрак'",
-"Баллистический калькулятор",
-"Патроны .50 AP (бронебойные) x15",
-"Автоматическая турель-приманка"
-],
-fullDesc: "Высший пилотаж снайперской стрельбы. Кит для профессионалов, которые умеют ждать и наносить один точный выстрел. Пробивает любую броню, идеален для устранения целей на дальних дистанциях."
-}
+{ name: "Cop", price: 79, desc: "Полицейский набор для выживания и правопорядка на Escalation.", icon: "Наборкопа.jpg", items: ["Костюм полицейского","Револьвер","Полицейская дубинка","Доп. обоймы для кобальта (2 шт)","4 улучшенных бинта","4 энергетика","4 консервы"], fullDesc: "Cop — кит для тех, кто предпочитает порядок и контроль. Даёт отличный стартовый набор брони, проверенное оружие и всё необходимое для выживания в первые часы игры." },
+{ name: "SniperLite", price: 129, desc: "Лёгкая снайперская экипировка для дальнего боя.", icon: "https://cdn-icons-png.flaticon.com/512/2879/2879649.png", items: ["Снайперка Private с прицелом 5x","Военный нож","Доп. обоймы для снайперки (2 шт)","3 энергетика","3 консервы","3 улучшенных бинта"], fullDesc: "SniperLite — идеальный выбор для начинающих снайперов. Ты получишь надёжную винтовку с оптикой 5x, запас патронов и всё необходимое для засадной войны на Escalation." },
+{ name: "RIOT", price: 199, desc: "Штурмовой набор. Броня, дробовик и гранаты для ближнего боя.", icon: "https://cdn-icons-png.flaticon.com/512/2187/2187574.png", items: ["Бронекостюм RIOT (4 ур.)","Дробовик Peacemaker","Светошумовые гранаты x4","Щит штурмовой","Медицинская сумка"], fullDesc: "Для тех, кто предпочитает действовать напролом! RIOT даёт преимущество в городских боях и рейдах на чужие базы. Высокая живучесть и подавляющая огневая мощь." },
+{ name: "SniperPro", price: 249, desc: "Элитный снайперский комплект. Максимальная дальность и убийство с одного выстрела.", icon: "https://cdn-icons-png.flaticon.com/512/1863/1863766.png", items: ["Винтовка Timberwolf (уникальная, 1 выстрел)","Маскировочный костюм 'Призрак'","Баллистический калькулятор","Патроны .50 AP (бронебойные) x15","Автоматическая турель-приманка"], fullDesc: "Высший пилотаж снайперской стрельбы. Кит для профессионалов, которые умеют ждать и наносить один точный выстрел. Пробивает любую броню, идеален для устранения целей на дальних дистанциях." }
 ];
 
 function renderKits() {
@@ -1522,138 +1403,66 @@ kitsData.forEach((kit, index) => {
 const card = document.createElement('div');
 card.className = 'kit-card';
 card.setAttribute('data-kit-index', index);
-card.innerHTML = `
-<div class="kit-card-inner">
-<div class="kit-badge">KIT</div>
-<div class="kit-name">${kit.name}</div>
-<div class="kit-price">${kit.price} ₽</div>
-<div class="kit-desc">${kit.desc}</div>
-<div class="kit-card-footer">
-<div class="kit-items-count">
-<span>📦 ${kit.items.length} предметов</span>
-</div>
-<div class="kit-arrow">→</div>
-</div>
-</div>
-`;
+card.innerHTML = `<div class="kit-card-inner"><div class="kit-badge">KIT</div><div class="kit-name">${kit.name}</div><div class="kit-price">${kit.price} ₽</div><div class="kit-desc">${kit.desc}</div><div class="kit-card-footer"><div class="kit-items-count"><span>📦 ${kit.items.length} предметов</span></div><div class="kit-arrow">→</div></div></div>`;
 card.addEventListener('click', () => openModal(index));
 grid.appendChild(card);
 });
 }
-
 function openModal(kitIndex) {
 const kit = kitsData[kitIndex];
 if (!kit) return;
 const modal = document.getElementById('kitModal');
-const modalKitName = document.getElementById('modalKitName');
-const modalKitIcon = document.getElementById('modalKitIcon');
-const modalKitDesc = document.getElementById('modalKitDesc');
-const modalKitItems = document.getElementById('modalKitItems');
-const buyBtn = document.getElementById('modalBuyBtn');
-modalKitName.textContent = kit.name;
-modalKitIcon.innerHTML = `<img src="${kit.icon}" alt="${kit.name}" onerror="this.src='https://via.placeholder.com/200?text=Kit'">`;
-modalKitDesc.textContent = kit.fullDesc;
+document.getElementById('modalKitName').textContent = kit.name;
+document.getElementById('modalKitIcon').innerHTML = `<img src="${kit.icon}" alt="${kit.name}" onerror="this.src='https://via.placeholder.com/200?text=Kit'">`;
+document.getElementById('modalKitDesc').textContent = kit.fullDesc;
 let itemsHtml = '<ul>';
-kit.items.forEach(item => {
-itemsHtml += `<li>🎯 ${item}</li>`;
-});
+kit.items.forEach(item => { itemsHtml += `<li>🎯 ${item}</li>`; });
 itemsHtml += '</ul>';
-modalKitItems.innerHTML = `<h4>📦 Комплектация:</h4>${itemsHtml}`;
-buyBtn.onclick = () => {
-alert(`🛒 Вы выбрали кит "${kit.name}" за ${kit.price} ₽.\nОплата и выдача в ближайшее время!`);
-modal.style.display = 'none';
-};
+document.getElementById('modalKitItems').innerHTML = `<h4>📦 Комплектация:</h4>${itemsHtml}`;
+document.getElementById('modalBuyBtn').onclick = () => { alert(`🛒 Вы выбрали кит "${kit.name}" за ${kit.price} ₽.\nОплата и выдача в ближайшее время!`); modal.style.display = 'none'; };
 modal.style.display = 'flex';
 }
-
-function closeModal() {
-const modal = document.getElementById('kitModal');
-modal.style.display = 'none';
-}
-
+function closeModal() { document.getElementById('kitModal').style.display = 'none'; }
 function showPage(pageId) {
-const heroPage = document.getElementById('hero-page');
-const serversPage = document.getElementById('servers-page');
-const donatePage = document.getElementById('donate-page');
-const teamPage = document.getElementById('team-page');
-const socialCorner = document.getElementById('socialCorner');
-
-heroPage.style.display = 'none';
-serversPage.classList.remove('active');
-donatePage.classList.remove('active');
-if(teamPage) teamPage.classList.remove('active');
-
-const allMenuItems = document.querySelectorAll('.nav-links a');
-allMenuItems.forEach(item => item.classList.remove('active'));
-
-if (pageId === 'hero-page') {
-heroPage.style.display = 'block';
-socialCorner.classList.remove('hidden');
-} else if (pageId === 'servers-page') {
-serversPage.classList.add('active');
-socialCorner.classList.add('hidden');
-const serversMenuItem = document.querySelector('.nav-links a[data-page="servers-page"]');
-if (serversMenuItem) serversMenuItem.classList.add('active');
-} else if (pageId === 'team-page') {
-teamPage.classList.add('active');
-socialCorner.classList.add('hidden');
-const teamMenuItem = document.querySelector('.nav-links a[data-page="team-page"]');
-if (teamMenuItem) teamMenuItem.classList.add('active');
-} else if (pageId === 'donate-page') {
-donatePage.classList.add('active');
-socialCorner.classList.add('hidden');
-const donateMenuItem = document.querySelector('.nav-links a[data-page="donate-page"]');
-if (donateMenuItem) donateMenuItem.classList.add('active');
-}
+const hero = document.getElementById('hero-page');
+const servers = document.getElementById('servers-page');
+const donate = document.getElementById('donate-page');
+const team = document.getElementById('team-page');
+const social = document.getElementById('socialCorner');
+hero.style.display = 'none';
+servers.classList.remove('active');
+donate.classList.remove('active');
+if(team) team.classList.remove('active');
+document.querySelectorAll('.nav-links a').forEach(i => i.classList.remove('active'));
+if (pageId === 'hero-page') { hero.style.display = 'block'; social.classList.remove('hidden'); }
+else if (pageId === 'servers-page') { servers.classList.add('active'); social.classList.add('hidden'); document.querySelector('.nav-links a[data-page="servers-page"]')?.classList.add('active'); }
+else if (pageId === 'team-page') { team.classList.add('active'); social.classList.add('hidden'); document.querySelector('.nav-links a[data-page="team-page"]')?.classList.add('active'); }
+else if (pageId === 'donate-page') { donate.classList.add('active'); social.classList.add('hidden'); document.querySelector('.nav-links a[data-page="donate-page"]')?.classList.add('active'); }
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
-function copyIP(ip) {
-navigator.clipboard.writeText(ip);
-alert('IP адрес ' + ip + ' скопирован!');
-}
-
+function copyIP(ip) { navigator.clipboard.writeText(ip); alert('IP адрес ' + ip + ' скопирован!'); }
 function updateOnlineCount() {
-const onlineSpan = document.getElementById('online-count');
-if (onlineSpan) {
-const fakeOnline = Math.floor(Math.random() * 37) + 12;
-onlineSpan.innerText = fakeOnline + ' / 60';
+const span = document.getElementById('online-count');
+if(span) span.innerText = (Math.floor(Math.random() * 37) + 12) + ' / 60';
 }
-}
-
 document.addEventListener('DOMContentLoaded', () => {
 showPage('hero-page');
 updateOnlineCount();
 setInterval(updateOnlineCount, 30000);
 renderKits();
-const modal = document.getElementById('kitModal');
-const closeBtn = document.getElementById('closeModalBtn');
-if (closeBtn) closeBtn.addEventListener('click', closeModal);
-window.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-const burgerBtn = document.getElementById('burgerBtn');
+document.getElementById('closeModalBtn')?.addEventListener('click', closeModal);
+window.addEventListener('click', (e) => { if (e.target === document.getElementById('kitModal')) closeModal(); });
+const burger = document.getElementById('burgerBtn');
 const navLinks = document.getElementById('navLinks');
-if (burgerBtn && navLinks) {
-burgerBtn.addEventListener('click', () => {
-burgerBtn.classList.toggle('active');
-navLinks.classList.toggle('open');
-});
-document.querySelectorAll('.nav-links a').forEach(link => {
-link.addEventListener('click', () => {
-burgerBtn.classList.remove('active');
-navLinks.classList.remove('open');
-});
-});
+if(burger && navLinks) {
+burger.addEventListener('click', () => { burger.classList.toggle('active'); navLinks.classList.toggle('open'); });
+document.querySelectorAll('.nav-links a').forEach(link => { link.addEventListener('click', () => { burger.classList.remove('active'); navLinks.classList.remove('open'); }); });
 }
-const navbar = document.getElementById('navbar');
-const scrollTopBtn = document.getElementById('scrollTopBtn');
 window.addEventListener('scroll', () => {
-if (window.scrollY > 100) {
-navbar.classList.add('scrolled');
-scrollTopBtn.classList.add('visible');
-} else {
-navbar.classList.remove('scrolled');
-scrollTopBtn.classList.remove('visible');
-}
+const navbar = document.getElementById('navbar');
+const topBtn = document.getElementById('scrollTopBtn');
+if(window.scrollY > 100) { navbar.classList.add('scrolled'); topBtn.classList.add('visible'); }
+else { navbar.classList.remove('scrolled'); topBtn.classList.remove('visible'); }
 });
 });
 </script>
